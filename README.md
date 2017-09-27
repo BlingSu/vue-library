@@ -44,4 +44,57 @@ function chunk(array, size) {
 ```
 
 ### _.slice
+---
+_.slice 接受三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
 
+```js
+function slice(array, start, end) {
+    // 判断传入的是否为数组如果是获取长度反之为0
+    let length = array == null ? 0 : array.length
+    // 如果数组长度为0， 则返回空的数组
+    if (!length) {
+        return []
+    }
+
+    /* 
+    判断start和end是否存在，若存在，则传入这个值
+    反之，start为0 end默认为数组的长度
+    */
+    start = start == null ? 0 : start
+    end = end == undefined ? length : end
+
+    /*
+     判断start是否为负数，若是，比较start相反数与数组长度的大小
+     如果大于 则为0 反之,为length+start的值
+     相当于 从数组的后面开始数，开始截取的位置
+    */
+    if (start < 0) {
+        start = -start > length ? 0 : (length + start)
+    }
+    /*
+    如果end大于数组的长度，就赋值为数组的长度
+    反之 判断是否小于0， 就等于end+end, 等于从后往前数结束的位置
+    */
+    end = end > length ? length : end
+    if (end < 0) {
+        end += length
+    }
+    /*
+    如果start>end 则length = 0， 反之就把
+    end-start然后向右无符号移动零位，然后把start向右无符号移动零位
+    主要是变成无符号32位蒸熟，无论是负数或者小数，避免超出数组的界限
+    */
+    length = start > end ? 0 ((end - start) >>> 0)
+    start >>>= 0
+
+    // 定义数组索引
+    let index = -1
+    // 根据长度 创建新的数组
+    const result = new Array(length)
+    // 通过while循环 不断往新数组插入截取的新的片段
+    while (++index < length) {
+        result[index] = array[index + start]
+    }
+    return result
+}
+```
