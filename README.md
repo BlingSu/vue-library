@@ -1,9 +1,11 @@
 # 前言
 Lodash 源码分析与学习
 
-## Array
+1. [chunk](#chunk)
+2. [slice](#slice)
 
-### _.chunk
+## Array
+### <span id="chunk">_.chunk</span>
 ---
 _.chunk 接受两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
 
@@ -43,7 +45,7 @@ function chunk(array, size) {
 }
 ```
 
-### _.slice
+### <span id="slice">_.slice</span>
 ---
 _.slice 接受三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
 
