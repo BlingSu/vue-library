@@ -4,6 +4,9 @@ Lodash 源码分析与学习
 1. [chunk](#chunk)
 2. [slice](#slice)
 3. [compact](#compact)
+4. [difference](#difference)
+5. [isLength](#isLength)
+6. [isArrayLike](#isArrayLike)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -134,4 +137,31 @@ function compact(array) {
 
 compact([0, 1, false, 2, '', 3])
 // => [1, 2 ,3]
+```
+
+### <span id="isLength">isLength</span>
+---
+isLength 接受一个参数，判断是该参数是否是有效的数组类长度
+
+```js
+const MAX_SAFE_INTEGER = 9007199254740991
+/* value是否number且是否大于-1且除1是否为0且小于MAX_SAFE_INTEGER
+    若为有效数组返回true反之false
+*/
+function isLength(value) {
+    return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER
+}
+```
+
+### <span id="isArrayLike">isArrayLike</span>
+---
+isArrayLike 接受一个参数,检测是否类似数组
+
+```js
+function isArrayLike(value) {
+    /* value不为空 且 不是一个function 且 长度在有效范围内
+        如果value是数组类型返回true 反之false
+    */
+    return value != null && type value !== 'function' && isLength(value.length)
+}
 ```

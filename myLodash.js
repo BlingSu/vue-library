@@ -55,10 +55,22 @@
         }
         return result
     }
+
+    const MAX_SAFE_INTEGER = 9007199254740991
+    let isLength = function(value) {
+        return typeof value == 'number' &&
+        value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER
+    }
+
+    let isArrayLike = function(value) {
+        return value != null && typeof value !== 'function' && isLength(value.length)
+    }
     
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
-        compact: compact
+        compact: compact,
+        isLength: isLength,
+        isArrayLike: isArrayLike
     }
 })(typeof global === 'undefined' ? window : global)
