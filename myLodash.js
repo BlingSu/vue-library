@@ -66,11 +66,16 @@
         return value != null && typeof value !== 'function' && isLength(value.length)
     }
     
+    let isObjectLike = function(value) {
+        return typeof value == 'object' && value !== null
+    }
+    
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
         compact: compact,
         isLength: isLength,
-        isArrayLike: isArrayLike
+        isArrayLike: isArrayLike,
+        isObjectLike: isObjectLike
     }
 })(typeof global === 'undefined' ? window : global)

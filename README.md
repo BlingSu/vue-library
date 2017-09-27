@@ -7,6 +7,7 @@ Lodash 源码分析与学习
 4. [difference](#difference)
 5. [isLength](#isLength)
 6. [isArrayLike](#isArrayLike)
+7. [isObjectLike](#isObjectLike)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -170,4 +171,15 @@ function isArrayLike(value) {
 
 isArrayLike([1, 2, 3])
 // => true
+```
+
+### <span id="isObjectLike">isObjectLike</span>
+---
+isObjectLike 接受一个参数，检测是否类似object
+
+```js
+function isObject(value) {
+    // 若为为object且不为null 返回true反之false
+    return typeof value == 'object' && value !== null
+}
 ```
