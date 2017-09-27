@@ -41,9 +41,24 @@
         }
         return result
     }
+
+    let compact = function(array) {
+        let resIndex = 0
+        const result = []
+        if (array == null) {
+            return result
+        }
+        for (const value of array) {
+            if (value) {
+                result[resIndex++] = value
+            }
+        }
+        return result
+    }
     
     windowGlobal._ = {
         chunk: chunk,
-        slice: slice
+        slice: slice,
+        compact: compact
     }
 })(typeof global === 'undefined' ? window : global)

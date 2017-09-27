@@ -3,11 +3,12 @@ Lodash 源码分析与学习
 
 1. [chunk](#chunk)
 2. [slice](#slice)
+3. [compact](#compact)
 
 ## Array
 ### <span id="chunk">chunk</span>
 ---
-_.chunk 接受两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
+chunk 接受两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
 
 ```js
 function chunk(array, size) {
@@ -47,7 +48,7 @@ function chunk(array, size) {
 
 ### <span id="slice">slice</span>
 ---
-_.slice 接受三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
+slice 接受三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
 
 ```js
 function slice(array, start, end) {
@@ -96,6 +97,31 @@ function slice(array, start, end) {
     // 通过while循环 不断往新数组插入截取的新的片段
     while (++index < length) {
         result[index] = array[index + start]
+    }
+    return result
+}
+```
+
+### <span id="compact">compact</span>
+---
+compact 接受一个参数 该参数是个数组， 用于创建一个新数组，包含原数组中所有的非假值元素
+
+```js
+function compact(array) {
+    // 用来表示返回数组第索引
+    let resIndex = 0
+    const result = []
+    
+    // 若传递第数组为空 则返回空的数组
+    if (array == null) {
+        return result
+    }
+
+    // es6数组循环 将通过boolean转化为false的值除去
+    for (const value of array) {
+        if (value) {
+            result[resIndex++] = value
+        }
     }
     return result
 }
