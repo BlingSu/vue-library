@@ -44,6 +44,9 @@ function chunk(array, size) {
     */
     return result
 }
+
+chunk(['a', 'b', 'c', 'd'], 2) 
+// => [['a', 'b'], ['c', 'd']]
 ```
 
 ### <span id="slice">slice</span>
@@ -100,6 +103,9 @@ function slice(array, start, end) {
     }
     return result
 }
+
+slice(['a', 'b', 'c', 'd'], 2)
+// => ['c', 'd']
 ```
 
 ### <span id="compact">compact</span>
@@ -125,4 +131,7 @@ function compact(array) {
     }
     return result
 }
+
+compact([0, 1, false, 2, '', 3])
+// => [1, 2 ,3]
 ```
