@@ -5,7 +5,7 @@ Lodash 源码分析与学习
 
 ### _.chunk
 ---
-_.chunk 接受两个参数 第一个参数是数组，第二个参数是大小，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
+_.chunk 接受两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
 
 ```js
 function chunk(array, size) {
@@ -32,7 +32,7 @@ function chunk(array, size) {
         result[resindex++] = slice(array, index, (index += size))
     }
     /*
-        31-33行代码等于于如下   
+        上3行代码等于于如下   
         for(; index < length;) {
             result[resIndex] = array.slice(index, index + size)
             resIndex++;
@@ -41,6 +41,7 @@ function chunk(array, size) {
     */
     return result
 }
-export default chunk
 ```
+
+### _.slice
 
