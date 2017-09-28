@@ -2,14 +2,16 @@
 Lodash 源码分析与学习
 
 1. [chunk](#chunk)
-2. [slice](#slice)
-3. [compact](#compact)
-4. [difference](#difference)
-5. [isLength](#isLength)
-6. [isArrayLike](#isArrayLike)
-7. [isObjectLike](#isObjectLike)
-8. [isArrayLikeObject](#isArrayLikeObject)
-9. [baseGetTag](#baseGetTag)
+2. [compact](#compact)
+3. [difference](#difference) 依赖如下
+* [slice](#slice)
+* [isLength](#isLength)
+* [isArrayLike](#isArrayLike)
+* [isObjectLike](#isObjectLike)
+* [isArrayLikeObject](#isArrayLikeObject)
+* [baseGetTag](#baseGetTag)
+* [getTag](#getTag)
+* [isArguments](#isArguments)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -177,7 +179,7 @@ isArrayLike([1, 2, 3])
 
 ### <span id="isObjectLike">isObjectLike</span>
 ---
-isObjectLike 接收一个参数，检测是否类似object
+isObjectLike 接收一个参数，检测是否类似object且不是null
 
 ```js
 function isObject(value) {
@@ -204,7 +206,7 @@ isArrayLikeObject('abc')
 
 ### <span id="baseGetTag">baseGetTag</span>
 ---
-baseGetTag 接收一个参数，安全检测该参数
+baseGetTag 接收一个参数，对toString().call()的封装，防止忽略Symbol.toStringTag属性值的 toString().call()
 
 ```js
 // 定义objectProto 为对象的原型
@@ -255,5 +257,63 @@ function baseGetTag(value) {
     return result
 }
 ```
+
+### <span id="getTag">getTag</span>
+--- getTag 接受一个参数 数据类型的检测
+
+```js
+/* 如下定义对应的类型 */
+const dataViewTag = '[object DataView]',
+      mapTag = '[object Map]',
+      objectTag = '[object Object]',
+      promiseTag = '[object Promise]',
+      setTag = '[object Set]',
+      weakMapTag = '[object WeakMap]'
+
+const dataViewCtorString = `${DataView}`,
+      mapCtorString = `${Map}`,
+      promiseCtorString = `${Promise}`,
+      setCtorString = `${Set}`,
+      weakMapCtorString = `${WeakMap}`
+
+    let getTag = baseGetTag
+    // 判断是否为getTag()的数据类型是否等于定义的数据类型
+    if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag)||
+    (getTag(new Map) != mapTag) ||
+    (getTag(Promise.resolve()) != promiseTag) ||
+    (getTag(new Set) != setTag) ||
+    (getTag(new WeakMap) != weakMapTag)) {
+        getTag = (value) => {
+            // 获取参数的类型检测
+            const result = baseGetTag(value)
+            // 如果为'[object, Object]' 返回此对象的数组函数的引用，反之undefined
+            const Ctor = result == objectTag ? value.constructor : undefined
+            // 如果 Ctor 为 true 返回 `${Ctor}` 反之为空
+            const ctorString = Ctor ? `${Ctor}` : ''
+
+            if (ctorString) {
+                // 如果成立，对应返回各自的值
+                switch (ctorString) {
+                    case dataViewCtorString: return dataViewTag
+                    case mapCtorString: return mapTag
+                    case promiseCtorString: return promiseTag
+                    case setCtorString: return setTag
+                    case weakMapCtorString: return weakMapTag
+                }
+            }
+            return result
+        }
+    }
+```
+
+### <span id="isArguments">isArguments</span>
+---
+
+```js
+function isArguments(value) {
+    return typeof value == 'object' && value !== null && getTag(value) == '[object Arguments]'
+}
+```
+
 
 
