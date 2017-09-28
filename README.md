@@ -307,10 +307,11 @@ const dataViewCtorString = `${DataView}`,
 ```
 
 ### <span id="isArguments">isArguments</span>
----
+-- 接收一个参数 判断是否是arguments类型
 
 ```js
 function isArguments(value) {
+    //  是 object 且不是 null 且数据类型是'[object Arguments]'
     return typeof value == 'object' && value !== null && getTag(value) == '[object Arguments]'
 }
 ```
