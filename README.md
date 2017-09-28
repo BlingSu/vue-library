@@ -8,11 +8,13 @@ Lodash 源码分析与学习
 5. [isLength](#isLength)
 6. [isArrayLike](#isArrayLike)
 7. [isObjectLike](#isObjectLike)
+8. [isArrayLikeObject](#isArrayLikeObject)
+9. [baseGetTag](#baseGetTag)
 
 ## Array
 ### <span id="chunk">chunk</span>
 ---
-chunk 接受两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
+chunk 接收两个参数 第一个参数是数组，第二个参数是每个块的长度，均分为大小的长度，如果不能均分，最后的就是剩余的元素。
 
 ```js
 function chunk(array, size) {
@@ -55,7 +57,7 @@ chunk(['a', 'b', 'c', 'd'], 2)
 
 ### <span id="slice">slice</span>
 ---
-slice 接受三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
+slice 接收三个参数，第一个是截取数组，第二个是截取开始位置，第三个是截取结束位置
 
 ```js
 function slice(array, start, end) {
@@ -114,7 +116,7 @@ slice(['a', 'b', 'c', 'd'], 2)
 
 ### <span id="compact">compact</span>
 ---
-compact 接受一个参数 该参数是个数组， 用于创建一个新数组，包含原数组中所有的非假值元素
+compact 接收一个参数 该参数是个数组， 用于创建一个新数组，包含原数组中所有的非假值元素
 
 ```js
 function compact(array) {
@@ -142,7 +144,7 @@ compact([0, 1, false, 2, '', 3])
 
 ### <span id="isLength">isLength</span>
 ---
-isLength 接受一个参数，判断是该参数是否是有效的数组类长度
+isLength 接收一个参数，判断是该参数是否是有效的数组类长度
 
 ```js
 const MAX_SAFE_INTEGER = 9007199254740991
@@ -159,7 +161,7 @@ isLength('3')
 
 ### <span id="isArrayLike">isArrayLike</span>
 ---
-isArrayLike 接受一个参数,检测是否类似数组
+isArrayLike 接收一个参数,检测是否类似数组
 
 ```js
 function isArrayLike(value) {
@@ -175,11 +177,83 @@ isArrayLike([1, 2, 3])
 
 ### <span id="isObjectLike">isObjectLike</span>
 ---
-isObjectLike 接受一个参数，检测是否类似object
+isObjectLike 接收一个参数，检测是否类似object
 
 ```js
 function isObject(value) {
     // 若为为object且不为null 返回true反之false
     return typeof value == 'object' && value !== null
 }
+
+isObjectLike([1, 2, 3])
+// => true
 ```
+
+### <span id="isArrayLikeObject">isArrayLikeObject</span>
+---
+isArrayLikeObject 接收一个参数，判断value是否为类数组的对象
+
+```js
+function isArrayLikeObject(value) {
+    return isObjectLike(value) && isArrayLike(value)
+}
+
+isArrayLikeObject('abc')
+ // => false
+```
+
+### <span id="baseGetTag">baseGetTag</span>
+---
+baseGetTag 接收一个参数，安全检测该参数
+
+```js
+// 定义objectProto 为对象的原型
+const objectProto = Object.prototype
+// 定义hasOwnProperty为检测一个对象是否含有特定的自身属性（不存在继承）
+const hasOwnProperty = objectProto.hasOwnProperty
+// 获取每个对象的类型(['object object'])，但需要 call 或 apply 来调用
+const toString = objectProto.toString
+/*
+    toStringTag 用于对象的默认值描述的字符串值，使用Object.prototype.toString()
+    判断Symbol 返回独一无二的自定义标签类型
+ */
+const symToStringTag = typeof Symbol != 'undefined' ? Symbol.toStringTag : undefined
+function baseGetTag(value) {
+    if (value == null) {
+        // 在value 为空的情况下判断是否为 undefined 是否返回相应的值
+        return value === undefined ? '[object Undefined]' : '[object null]'
+    }
+    // 如果 symToStringTag !== undefined && symToStringTag不存在与Object(value)相同的时候,内置的toString方法通过call的形式来调用
+    if (!(symToStringTag && symToStringTag in Object(value))) {
+        return toString.call(value)
+    }
+
+    // 瞅瞅 value是否存在symTostringTag，且不能在prototype找
+    const isOwn = hasOwnProperty.call(value, symToStringTag)
+    // 不存在 塞一个进去
+    const tag = value[symToStringTag]
+    // 定义一个标识
+    let unmasked = false
+    try {
+        // 执行错误测试 
+        value[symToStringTag] = undefined
+        unmasked = true
+    } catch (e) {}
+    
+    // 定义一个检测的类型
+    const result = toString.call(value)
+    // 如果执行错误测试成功
+    if (unmasked) {
+        if (isOwn) {
+            // 现在的那个等于之前塞进去定义的那个
+            value[symToStringTag] = tag
+        } else {
+            // 删除现在的这个
+            delete value[symToStringTag]
+        }
+    }
+    return result
+}
+```
+
+

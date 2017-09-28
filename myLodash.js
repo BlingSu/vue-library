@@ -65,17 +65,54 @@
     let isArrayLike = function(value) {
         return value != null && typeof value !== 'function' && isLength(value.length)
     }
-    
+
     let isObjectLike = function(value) {
         return typeof value == 'object' && value !== null
     }
-    
+
+    let isArrayLikeObject = function(value) {
+        return isObjectLike(value) && isArrayLike(value)
+    }
+
+    const objectProto = Object.prototype
+    const hasOwnProperty = objectProto.hasOwnProperty
+    const toString = objectProto.toString
+    const symToStringTag = typeof symbol != 'undefined' ? Symbol.toStringTag : undefined
+
+    let baseGetTag = function(value) {
+        if (value == null) {
+            return value === undefined ? '[object Undefined]' : '[object Null]'
+        }
+        if (!(symToStringTag && symToStringTag in Object(value))) {
+            return toString.call(value)
+        }
+        const isOwn = hasOwnProperty.call(value, symToStringTag)
+        const tag = value[symToStringTag]
+        let unmasked = false
+        try {
+            value[symToStringTag] = undefined
+            unmasked = true
+        } catch (e) {}
+
+        const result = toString.call(value)
+        if (unmasked) {
+            if (isOwn) {
+                value[symToStringTag] = tag
+            } else {
+                delete value[symToStringTag]
+            }
+        }
+        return result
+    }
+
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
         compact: compact,
         isLength: isLength,
         isArrayLike: isArrayLike,
-        isObjectLike: isObjectLike
+        isObjectLike: isObjectLike,
+        isArrayLikeObject: isArrayLikeObject,
+        baseGetTag: baseGetTag
     }
 })(typeof global === 'undefined' ? window : global)
