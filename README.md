@@ -259,7 +259,8 @@ function baseGetTag(value) {
 ```
 
 ### <span id="getTag">getTag</span>
---- getTag 接受一个参数 数据类型的检测
+--- 
+getTag 接受一个参数 数据类型的检测
 
 ```js
 /* 如下定义对应的类型 */
@@ -307,7 +308,8 @@ const dataViewCtorString = `${DataView}`,
 ```
 
 ### <span id="isArguments">isArguments</span>
--- 接收一个参数 判断是否是arguments类型
+--- 
+isArguments 接收一个参数 判断是否是arguments类型
 
 ```js
 function isArguments(value) {
