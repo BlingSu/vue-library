@@ -5,7 +5,7 @@ Lodash 源码分析与学习
 2. [compact](#compact)
 3. [difference](#difference) 依赖如下
 * [slice](#slice)
-* [isLength](#isLength)
+* [isLength](#is-length)
 * [isArrayLike](#isArrayLike)
 * [isObjectLike](#isObjectLike)
 * [isArrayLikeObject](#isArrayLikeObject)
