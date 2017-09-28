@@ -1,4 +1,6 @@
 (function(windowGlobal) {
+
+    /* chunk */
     let chunk = function(array, size) {
         size = Math.max(size, 0)
         size = (typeof size === 'undefined') ? 0 : size
@@ -17,6 +19,7 @@
         return result
     }
 
+    /* slice */
     let slice = function(array, start, end) {
         let length = array == null ? 0 : array.length
         if (!length) {
@@ -42,6 +45,7 @@
         return result
     }
 
+    /* compact */
     let compact = function(array) {
         let resIndex = 0
         const result = []
@@ -56,24 +60,29 @@
         return result
     }
 
+    /* isLength */
     const MAX_SAFE_INTEGER = 9007199254740991
     let isLength = function(value) {
         return typeof value == 'number' &&
         value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER
     }
 
+    /* isArrayLike */
     let isArrayLike = function(value) {
         return value != null && typeof value !== 'function' && isLength(value.length)
     }
 
+    /* isObjectLike */
     let isObjectLike = function(value) {
         return typeof value == 'object' && value !== null
     }
 
+    /* isArrayLikeObject */
     let isArrayLikeObject = function(value) {
         return isObjectLike(value) && isArrayLike(value)
     }
 
+    /* baseGetTag */
     const objectProto = Object.prototype
     const hasOwnProperty = objectProto.hasOwnProperty
     const toString = objectProto.toString
@@ -105,6 +114,49 @@
         return result
     }
 
+    /* getTag */
+    const dataViewTag = '[object DataView]'
+    const mapTag = '[object Map]'
+    const objectTag = '[object Object]'
+    const promiseTag = '[object Promise]'
+    const setTag = '[object Set]'
+    const weakMapTag = '[object WeakMap]'
+
+    const dataViewCtorString = `${DataView}`
+    const mapCtorString = `${Map}`
+    const promiseCtorString = `${Promise}`
+    const setCtorString = `${Set}`
+    const weakMapCtorString = `${WeakMap}`
+
+    let getTag = baseGetTag
+
+    if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+        (getTag(new Map) != mapTag) ||
+        (getTag(Promise.resolve()) != promiseTag) ||
+        (getTag(new Set) != setTag) ||
+        (getTag(new WeakMap) != weakMapTag)) {
+        getTag = (value) => {
+            const result = baseGetTag(value)
+            const Ctor = result == objectTag ? value.constructor : undefined
+            const ctorString = Ctor ? `${Ctor}` : ''
+            if (ctorString) {
+                switch (ctorString) {
+                    case dataViewCtorString: return dataViewTag
+                    case mapCtorString: return mapTag
+                    case promiseCtorString: return promiseTag
+                    case setCtorString: return setTag
+                    case weakMapCtorString: return weakMapTag
+                }
+            }
+            return result
+        }
+    }
+
+    /* isArguments */
+    let isArguments = function(value) {
+        return typeof value == 'object' && value !== null && getTag(value) == '[object Arguments]'
+    }
+
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
@@ -113,6 +165,8 @@
         isArrayLike: isArrayLike,
         isObjectLike: isObjectLike,
         isArrayLikeObject: isArrayLikeObject,
-        baseGetTag: baseGetTag
+        baseGetTag: baseGetTag,
+        getTag: getTag,
+        isArguments: isArguments
     }
 })(typeof global === 'undefined' ? window : global)
