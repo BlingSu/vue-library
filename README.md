@@ -279,17 +279,17 @@ const dataViewCtorString = `${DataView}`,
     let getTag = baseGetTag
     // 判断是否为getTag()的数据类型是否等于定义的数据类型
     if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag)||
-    (getTag(new Map) != mapTag) ||
-    (getTag(Promise.resolve()) != promiseTag) ||
-    (getTag(new Set) != setTag) ||
-    (getTag(new WeakMap) != weakMapTag)) {
-        getTag = (value) => {
-            // 获取参数的类型检测
-            const result = baseGetTag(value)
-            // 如果为'[object, Object]' 返回此对象的数组函数的引用，反之undefined
-            const Ctor = result == objectTag ? value.constructor : undefined
-            // 如果 Ctor 为 true 返回 `${Ctor}` 反之为空
-            const ctorString = Ctor ? `${Ctor}` : ''
+        (getTag(new Map) != mapTag) ||
+        (getTag(Promise.resolve()) != promiseTag) ||
+        (getTag(new Set) != setTag) ||
+        (getTag(new WeakMap) != weakMapTag)) {
+            getTag = (value) => {
+                // 获取参数的类型检测
+                const result = baseGetTag(value)
+                // 如果为'[object, Object]' 返回此对象的数组函数的引用，反之undefined
+                const Ctor = result == objectTag ? value.constructor : undefined
+                // 如果 Ctor 为 true 返回 `${Ctor}` 反之为空
+                const ctorString = Ctor ? `${Ctor}` : ''
 
             if (ctorString) {
                 // 如果成立，对应返回各自的值
