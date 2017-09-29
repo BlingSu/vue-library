@@ -6,12 +6,12 @@ Lodash 源码分析与学习
 3. [difference](#difference) 依赖如下
 * [slice](#slice)
 * [isLength](#islength)
-* [isArrayLike](#isArrayLike)
-* [isObjectLike](#isObjectLike)
-* [isArrayLikeObject](#isArrayLikeObject)
-* [baseGetTag](#baseGetTag)
-* [getTag](#getTag)
-* [isArguments](#isArguments)
+* [isArrayLike](#isarraylike)
+* [isObjectLike](#isobjectlike)
+* [isArrayLikeObject](#isarrayobject)
+* [baseGetTag](#basegettag)
+* [getTag](#gettag)
+* [isArguments](#isarguments)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -161,7 +161,7 @@ isLength('3')
 // => false
 ```
 
-### <span id="isArrayLike">isArrayLike</span>
+### <span id="isarraylike">isArrayLike</span>
 ---
 isArrayLike 接收一个参数,检测是否类似数组
 
@@ -177,7 +177,7 @@ isArrayLike([1, 2, 3])
 // => true
 ```
 
-### <span id="isObjectLike">isObjectLike</span>
+### <span id="isobjectlike">isObjectLike</span>
 ---
 isObjectLike 接收一个参数，检测是否类似object且不是null
 
@@ -191,7 +191,7 @@ isObjectLike([1, 2, 3])
 // => true
 ```
 
-### <span id="isArrayLikeObject">isArrayLikeObject</span>
+### <span id="isarraylikeobject">isArrayLikeObject</span>
 ---
 isArrayLikeObject 接收一个参数，判断value是否为类数组的对象
 
@@ -204,7 +204,7 @@ isArrayLikeObject('abc')
  // => false
 ```
 
-### <span id="baseGetTag">baseGetTag</span>
+### <span id="basegettag">baseGetTag</span>
 ---
 baseGetTag 接收一个参数，对toString().call()的封装，防止忽略Symbol.toStringTag属性值的 toString().call()
 
@@ -258,7 +258,7 @@ function baseGetTag(value) {
 }
 ```
 
-### <span id="getTag">getTag</span>
+### <span id="gettag">getTag</span>
 --- 
 getTag 接受一个参数 数据类型的检测
 
@@ -307,7 +307,7 @@ const dataViewCtorString = `${DataView}`,
     }
 ```
 
-### <span id="isArguments">isArguments</span>
+### <span id="isarguments">isArguments</span>
 --- 
 isArguments 接收一个参数 判断是否是arguments类型
 
