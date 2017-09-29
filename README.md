@@ -8,7 +8,7 @@ Lodash 源码分析与学习
 * [isLength](#islength)
 * [isArrayLike](#isarraylike)
 * [isObjectLike](#isobjectlike)
-* [isArrayLikeObject](#isarrayobject)
+* [isArrayLikeObject](#isarraylikeobject)
 * [baseGetTag](#basegettag)
 * [getTag](#gettag)
 * [isArguments](#isarguments)
