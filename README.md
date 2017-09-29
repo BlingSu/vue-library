@@ -5,7 +5,7 @@ Lodash 源码分析与学习
 2. [compact](#compact)
 3. [difference](#difference) 依赖如下
 * [slice](#slice)
-* [isLength](#is-length)
+* [isLength](#islength)
 * [isArrayLike](#isArrayLike)
 * [isObjectLike](#isObjectLike)
 * [isArrayLikeObject](#isArrayLikeObject)
@@ -144,7 +144,7 @@ compact([0, 1, false, 2, '', 3])
 // => [1, 2 ,3]
 ```
 
-### <span id="isLength">isLength</span>
+### <span id="islength">isLength</span>
 ---
 isLength 接收一个参数，判断是该参数是否是有效的数组类长度
 
