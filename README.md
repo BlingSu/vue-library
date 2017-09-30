@@ -12,6 +12,8 @@ Lodash 源码分析与学习
 * [baseGetTag](#basegettag)
 * [getTag](#gettag)
 * [isArguments](#isarguments)
+* [isFlattenable](#isflattenable)
+* [baseFlatten](#baseflatten)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -96,7 +98,7 @@ function slice(array, start, end) {
     /*
     如果start>end 则length = 0， 反之就把
     end-start然后向右无符号移动零位，然后把start向右无符号移动零位
-    主要是变成无符号32位蒸熟，无论是负数或者小数，避免超出数组的界限
+    主要是变成无符号32位整数，无论是负数或者小数，避免超出数组的界限
     */
     length = start > end ? 0 ((end - start) >>> 0)
     start >>>= 0
@@ -318,5 +320,61 @@ function isArguments(value) {
 }
 ```
 
+### <span id="isflattenable">isFlattenable</span>
+---
+isFlattenable 接收一个参数 检测该参数是一个可扩展的arguments对象或数组
 
+```js
+/* 配置Array.prototype.concat() 方法的参数时是否展开其数组元素
+    类似数组的对象，用于concat，将对象作为新数组元素
+    数组，按数组元素展开进行连接
+*/
+const spreadableSymbol = Symbol.isConcatSpreadable
 
+function isFlattenable(value) {
+    // 返回是否数组类似数组
+    return Array.isArray(value) || isArguments(value) || !!(spreadableSymbol && value && value[spreadableSymbol])
+}
+```
+
+### <span id="baseflatten">baseFlatten</span>
+---
+baseflatten 是否限制扁平化操作 接受五个参数
+
+```js
+/* 
+  array  需要处理的数组
+  depth  扁平化的深度
+  predicate 是否执行扁平化操作，对每个元素进行调用
+  isStrict  是否准讯predicate检查
+  result 返回结果 
+*/
+
+function baseFlatten(array, depth, predicate, isStrict, result) {
+    // 若没传判断方法， 方法为isFlattenable，仅可以执行扁平化就执行
+    predicate || (baseFlatten = isFlattenable)
+    // 没传初始的结果数组，为空
+    result || (result = [])
+
+    if (array == null) {
+        return result
+    }
+
+    // 遍历
+    for (const value of array) {
+        // 如果大于0 且 通过检查
+        if (depth > 0 && predicate(value)) {
+            // 如果大于1 ，需继续扁平化，递归调用自身，depth-1，否则直接塞到result
+            if (depth > 1) {
+                baseFlatten(value, depth - 1, predicate, isStrict, result)
+            } else {
+                result.push(...value)
+            }
+            // 如果不遵守判断规则，直接将value添加到结果中
+        } else if (!isStrict) {
+            result[result.length] = value
+        }
+    }
+    return result
+}
+```

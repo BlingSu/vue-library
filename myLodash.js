@@ -157,6 +157,36 @@
         return typeof value == 'object' && value !== null && getTag(value) == '[object Arguments]'
     }
 
+    /* isFlattenable */
+    const spreadableSymbol = Symbol.isConcatSpreadable
+
+    let isFlattenable = function(value) {
+        return Array.isArray(value) || isArguments(value) ||
+        !!(spreadableSymbol && value && value[spreadableSymbol])
+    }
+
+    /* baseFlatten */
+    function baseFlatten(array, depth, predicate, isStrict, result) {
+        predicate || (predicate = isFlattenable)
+        result || (result = [])
+
+        if (array == null) {
+            return result
+        }
+        for (const value of array) {
+            if (depth > 0 && predicate(value)) {
+                if (depth > 1) {
+                    baseFlatten(value, depth - 1, predicate, isStrict, result)
+                } else {
+                    result.push(...value)
+                }
+            } else if (!isStrict) {
+                result[result.length] = value
+            }
+        }
+        return result
+    }
+
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
