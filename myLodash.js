@@ -187,6 +187,106 @@
         return result
     }
 
+    /* Hash */
+    const HASH_UNDEFINED = '__lodash_hash_undefined__'
+    class Hash {
+        constructor(entries) {
+            let index = -1
+            const length = entries == null ? 0 : entries.length
+            this.clear()
+            while (++index < length) {
+                const entry = entries[index]
+                this.set(entry[0], entry[1])
+            }
+        }
+        clear() {
+            this.__data__ = Object.create(null)
+            this.size = 0
+        }
+        delete(key) {
+            const result = this.has(key) && delete this.__data__[key]
+            this.size -= result ? 1: 0
+            return result
+        }
+        has(key) {
+            const data = this.__data__
+            return data[key] !== undefined
+        }
+        set(key, value) {
+            const data = this.__data__
+            this.size += this.has(key) ? 0 : 1
+            data[key] = value === undefined ? HASH_UNDEFINED : value
+            return this
+        }
+    }
+
+    /* eq */
+    let eq = function(value, other) {
+        return value === other || (value !== value && other !== other)
+    }
+
+    /* assocIndexOf */
+    let associndexof = function(array, key) {
+        let { length } = array
+        while (length--) {
+            if (eq(array[length][0], key)) {
+                return length
+            }
+        }
+        return - 1
+    }
+
+    /* ListCache */
+    class ListCache {
+        constructor(entries) {
+            let index = -1
+            const length = entries == null ? 0 : entries.length
+            this.clear()
+            while (++index < length) {
+                const entry = entries[index]
+                this.set(entry[0], entry[1])
+            }
+        }
+        clear() {
+            this.__data__ = []
+            this.size = 0
+        }
+        delete(key) {
+            const data = this.__data__
+            const index = assocIndexOf(data, key)
+            if (index < 0) {
+                return false
+            }
+            const lastIndex = data.length - 1
+            if (index == lastIndex) {
+                data.pop()
+            } else {
+                data.splice(index, 1)
+            }
+            --this.size
+            return true
+        }
+        get(key) {
+            const data = this.__data__
+            const index = assocIndexOf(data, key)
+            return index < 0 ? undefined : data[index][1]
+        }
+        has(key) {
+            return assocIndexOf(this.__data__, key) > -1
+        }
+        set(key, value) {
+            const data = this.__data__
+            const index = assocIndexOf(data, key)
+            if (inde < 0) {
+                ++this.size
+                data.push([key, value])
+            } else {
+                data[index][1] = value
+            }
+            return this
+        }
+    }
+
     windowGlobal._ = {
         chunk: chunk,
         slice: slice,
@@ -197,6 +297,11 @@
         isArrayLikeObject: isArrayLikeObject,
         baseGetTag: baseGetTag,
         getTag: getTag,
-        isArguments: isArguments
+        isArguments: isArguments,
+        isFlattenable: isFlattenable,
+        baseFlatten: baseFlatten,
+        Hash: Hash,
+        eq: eq,
+        associndexof: associndexof
     }
 })(typeof global === 'undefined' ? window : global)

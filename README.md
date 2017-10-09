@@ -490,7 +490,7 @@ class ListCache {
 
     delete(key) {
         const data = this.__data__
-        const index = associndexof(data, key)
+        const index = assocIndexOf(data, key)
 
         if (index < 0) {
             return false
@@ -507,22 +507,22 @@ class ListCache {
 
     get(key) {
         const data = this.__data__
-        const index = associndexof(data, key)
+        const index = assocIndexOf(data, key)
         return index < 0 ? undefined : data[index][1]
     }
 
     has(key) {
-        return associndexof(this.__data__, key) > -1
+        return assocIndexOf(this.__data__, key) > -1
     }
 
     set(key, value) {
         const data = this.__data__
-        const index = associndexof(data, key)
+        const index = assocIndexOf(data, key)
 
         if (index < 0) {
             ++this.size
             data.push([key, value])
-        } esle {
+        } else {
             data[index][1] = value
         }
         return this
