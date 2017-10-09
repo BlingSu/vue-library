@@ -14,6 +14,10 @@ Lodash 源码分析与学习
 * [isArguments](#isarguments)
 * [isFlattenable](#isflattenable)
 * [baseFlatten](#baseflatten)
+* [Hash](#hash)
+* [eq](#eq)
+* [assocIndexOf](#associndexof)
+* [ListCache](#listcache)
 
 ## Array
 ### <span id="chunk">chunk</span>
@@ -376,5 +380,152 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
         }
     }
     return result
+}
+```
+
+### <span id="hash">Hash</span>
+---
+hash ????????????????????
+
+```js
+const HASH_UNDEFINED = '__lodash_hash_undefined__'
+
+// 创建一个hash对象
+class Hash {
+    // entries: key-value 
+    constructor(entries) {
+        let index = -1
+        const length = entries == null ? 0 : entries.length
+
+        this.clear()
+        while (++index < length) {
+            const entry = entries[index]
+            this.set(entry[0], entry[1])
+        }
+    }
+
+    clear() {
+        this.__data__ = Object.create(null)
+        this.size = 0
+    }
+
+    delete(key) {
+        const result = this.has(key) && delete this.__data__[key]
+        this.size -= result ? 1 : 0
+        return result
+    }
+
+    get(key) {
+        const data = this.__data__
+        const result = data[key]
+        return result === HASH_UNDEFINED
+    }
+
+    has(key) {
+        const data = this.__data__
+        return data[key] !== undefined
+    }
+
+    set(key, value) {
+        const data = this.__data__
+        this.size += this.has(key) ? 0 : 1
+        data[key] = value === undefined ? HASH_UNDEFINED : value
+        return this
+    }
+}
+```
+
+### <span id="eq">eq</span>
+---
+eq ???????
+
+```js
+function eq(value, other) {
+    return value === other || (value !== value && other !== other)
+}
+
+const object = { 'a': 1 }
+const other = { 'a': 1 }
+eq(object, other)
+// => false
+```
+
+### <span id="associndexof">assocIndexOf</span>
+---
+assocIndexOf 
+
+```js
+function assocIndexOf(array, key) {
+    let { length } = array
+    while (length--) {
+        if (eq(array[length][0], key)) {
+            return length
+        }
+    }
+    return -1
+}
+```
+
+### <span id="listcache">ListCache</span>
+---
+ListCache
+
+```js
+class ListCache {
+    constructor(entries) {
+        let index = -1
+        const = length = entries == null ? 0 : entries.length
+
+        this.clear()
+        while (++index < length) {
+            const entry = entries[index]
+            this.set(entry[0], entry[1])
+        }
+    }
+
+    clear() {
+        this.__data__ = []
+        this.size = 0
+    }
+
+    delete(key) {
+        const data = this.__data__
+        const index = associndexof(data, key)
+
+        if (index < 0) {
+            return false
+        }
+        const lastIndex = data.length - 1
+        if (index == lastIndex) {
+            data.pop()
+        } else {
+            data.splice(index, 1)
+        }
+        --this.size
+        return true
+    }
+
+    get(key) {
+        const data = this.__data__
+        const index = associndexof(data, key)
+        return index < 0 ? undefined : data[index][1]
+    }
+
+    has(key) {
+        return associndexof(this.__data__, key) > -1
+    }
+
+    set(key, value) {
+        const data = this.__data__
+        const index = associndexof(data, key)
+
+        if (index < 0) {
+            ++this.size
+            data.push([key, value])
+        } esle {
+            data[index][1] = value
+        }
+        return this
+    }
 }
 ```
