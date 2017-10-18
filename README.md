@@ -1,7 +1,4 @@
 # 前言
-> [javascript基础算法学习](https://github.com/angelasubi/lodash-algorithm/issues/1)
-<br>
-
 > Lodash 源码分析与学习
 
 1. [chunk](#chunk)
