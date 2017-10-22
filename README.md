@@ -385,7 +385,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 
 ### <span id="hash">Hash</span>
 ---
-hash ????????????????????
+hash 
 
 ```js
 const HASH_UNDEFINED = '__lodash_hash_undefined__'
@@ -437,7 +437,7 @@ class Hash {
 
 ### <span id="eq">eq</span>
 ---
-eq ???????
+eq 
 
 ```js
 function eq(value, other) {
