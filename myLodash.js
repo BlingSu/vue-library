@@ -173,6 +173,7 @@
         if (array == null) {
             return result
         }
+
         for (const value of array) {
             if (depth > 0 && predicate(value)) {
                 if (depth > 1) {
