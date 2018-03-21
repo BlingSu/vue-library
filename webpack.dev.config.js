@@ -41,7 +41,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.common.js',
       'assets': path.resolve(__dirname, './src/assets'),
-      'components': path.resolve(__dirname, './src/components')
+      'components': path.resolve(__dirname, './src/components'),
+      'common': path.resolve(__dirname, './src/common')
     }
   },
 
@@ -58,12 +59,12 @@ module.exports = {
     }),
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3333' })
+    new OpenBrowserPlugin({ url: 'http://localhost:8888' })
   ],
 
   devServer: {
     contentBase: path.join(__dirname, './dist'),
-    port: 3333,
+    port: 8888,
     historyApiFallback: true,
     host: '0.0.0.0',
     hot: true
