@@ -1,6 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 module.exports = {
   entry: path.join(__dirname, 'src/main.js'),
@@ -53,6 +56,16 @@ module.exports = {
         removeAttributeQuotes: true
       }
     }),
-    new CleanWebpackPlugin(['dist'])
-  ]
+    new CleanWebpackPlugin(['dist']),
+    new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: 'http://localhost:3333' })
+  ],
+
+  devServer: {
+    contentBase: path.join(__dirname, './dist'),
+    port: 3333,
+    historyApiFallback: true,
+    host: '0.0.0.0',
+    hot: true
+  }
 }
