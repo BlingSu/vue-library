@@ -23,7 +23,7 @@ module.exports = {
         include: path.join(__dirname, 'src')
       },
       {
-        test: /\.png$/,
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: 'file-loader'
       },
       {
