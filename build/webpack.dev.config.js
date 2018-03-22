@@ -6,10 +6,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 module.exports = {
-  entry: path.join(__dirname, 'src/main.js'),
+  entry: path.join(__dirname, '../src/main.js'),
+
+  devtool: 'inlin-source-map',
 
   output: {
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, '../dist'),
     filename: 'bundle.[hash].js',
   },
 
@@ -39,17 +41,16 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.common.js',
-      'assets': path.resolve(__dirname, './src/assets'),
-      'components': path.resolve(__dirname, './src/components'),
-      'common': path.resolve(__dirname, './src/common')
+      'assets': path.resolve(__dirname, '../src/assets'),
+      'components': path.resolve(__dirname, '../src/components'),
+      'common': path.resolve(__dirname, '../src/common')
     }
   },
 
   plugins: [
     new HtmlWebpackPlugin({
       title: 'title',
-      template: 'index.html',
+      template: path.join(__dirname, '../index.html'),
       inject: true,
       minify: {
         removeComments: true,
@@ -59,11 +60,14 @@ module.exports = {
     }),
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:8888' })
+    new OpenBrowserPlugin({ url: 'http://localhost:8888' }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    })
   ],
 
   devServer: {
-    contentBase: path.join(__dirname, './dist'),
+    contentBase: path.join(__dirname, '../dist'),
     port: 8888,
     historyApiFallback: true,
     host: '0.0.0.0',

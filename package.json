@@ -4,8 +4,7 @@
   "description": "基于vue的图书借阅系统",
   "main": "index.js",
   "scripts": {
-    "dev-build": "webpack --config webpack.dev.config.js",
-    "start": "webpack-dev-server --config webpack.dev.config.js --color --progress"
+    "start": "webpack-dev-server --env.NODE_ENv=development --config build/webpack.dev.config.js --color --progress"
   },
   "repository": {
     "type": "git",
