@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Message } from 'element-ui'
-import router from '../router'
+import router from '../../router'
 
 let env = process.env.NODE_ENV === 'production'
   ? 'http://www.longye.xyz/'
