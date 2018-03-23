@@ -19,7 +19,7 @@
 <script>
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       activeIndex: '1',
       name: '个人中心'
@@ -29,6 +29,9 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
+      if(key == 'userReg' && keyPath[0] == 3) {
+        this.$router.push({path: '/user-reg'})
+      }
     }
   }
 }
