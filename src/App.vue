@@ -30,7 +30,7 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
       if(key == 'userReg' && keyPath[0] == 3) {
-        this.$router.push({path: '/user-reg'})
+        // this.$router.push({path: '/user-reg'})
       }
     }
   }
@@ -38,5 +38,5 @@ export default {
 </script>
 
 <style lang="stylus">
-  @import 'common/css/header.styl'
+  @import 'common/stylus/header.styl'
 </style>
