@@ -85,7 +85,7 @@ export default {
         gender: [{required: true, message: '请选择性别', trigger: 'change'}],
         birthday: [{required: true, message: '请选择出生年月', trigger: 'change'}],
         mobile: [{required: true, message: '请输入手机号码', trigger: 'blur'}],
-        email: [{required: true, message: '请输入邮箱', trigger: 'blur'}],
+        email: [{required: true, message: '请输入邮箱', trigger: 'blur', type: 'email'}],
         address: [{required: true, message: '请输入地址', trigger: 'blur'}]
       }
     }
@@ -95,20 +95,10 @@ export default {
     submitForm(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-            console.log(this.form)
-            this.$http.post('user/reg', {
-              user_name: this.form.user_name,
-              pwd: this.form.pwd,
-              rePWD: this.form.rePWD,
-              name: this.form.name,
-              gender: this.form.gender,
-              birthday: this.form.birthday,
-              mobile: this.form.mobile,
-              email: this.form.email,
-              address: this.form.address
-            })
+            this.$http.post('user/reg', this.form)
             .then(resp => {
-              console.log(resp)
+              this.$message({ type: 'success', message: resp.data.message })
+              this.$router.push({ path: '/login' })
             })
         } else {
           this.$message({ type: 'warning', message: '请完整填写相关信息' })
