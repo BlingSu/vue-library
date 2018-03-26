@@ -6,14 +6,14 @@
       </el-input>
 
       <div class="container">
-        <div class="card" v-for="item in 5" :key="item">
-          <img src="http://element.eleme.io/static/hamburger.50e4091.png">
+        <div class="card" v-for="item in listData" :key="item._id">
+          <img :src="item.img">
           <div class="info">
-            <h3>好吃的汉堡</h3>
+            <h3>{{ item.title }}</h3>
             <div class="bom">
-              <span class="author">苏耀龙</span>
-              <span class="price">￥122</span>
-              <button>购买</button>
+              <span class="author">{{ item.author }}</span>
+              <span class="price">{{ '￥' + item.price + '元'}}</span>
+              <button>借阅</button>
             </div>
           </div>
         </div>
@@ -57,8 +57,7 @@ export default {
     width: 80%;
     margin: 20px auto
     .container
-      margin:20px auto
-      width: 1200px
+      margin:20px 0
     .card
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
       width: 220px
@@ -76,7 +75,10 @@ export default {
         color: #303133
         font-weight: normal
         font-size: 14px
-        padding-bottom: 6px
+        margin-bottom: 6px
+        height: 22px
+        line-height: 22px
+        overflow: hidden
       .bom
         height: 25px
         overflow: hidden
