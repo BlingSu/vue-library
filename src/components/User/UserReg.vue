@@ -1,14 +1,14 @@
 <template>
   <div class="reg">
     <el-form :model="form" :rules="rules" ref="form" label-width="120px">
-      <el-form-item label="用户名" prop="username">
-        <el-input class="reg-input" placeholder="请输入你的用户名" v-model="form.username"></el-input>
+      <el-form-item label="用户名" prop="user_name">
+        <el-input class="reg-input" placeholder="请输入你的用户名" v-model="form.user_name"></el-input>
       </el-form-item>
-      <el-form-item prop="password" label="密码">
-        <el-input class="reg-input" placeholder="请输入你的密码" v-model="form.password"></el-input>
+      <el-form-item prop="pwd" label="密码">
+        <el-input type="password" class="reg-input" placeholder="请输入你的密码" v-model="form.pwd"></el-input>
       </el-form-item>
-      <el-form-item prop="pwd" label="确认密码">
-        <el-input class="reg-input" placeholder="请再次输入你的密码" v-model="form.pwd"></el-input>
+      <el-form-item prop="rePWD" label="确认密码">
+        <el-input type="password" class="reg-input" placeholder="请再次输入你的密码" v-model="form.rePWD"></el-input>
       </el-form-item>
       <el-form-item prop="name" label="姓名">
         <el-input class="reg-input" placeholder="请输入你的姓名" v-model="form.name"></el-input>
@@ -19,15 +19,15 @@
           <el-radio label="女"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="date" label="出生日期">
+      <el-form-item prop="birthday" label="出生日期">
         <el-date-picker
-          v-model="form.date"
+          v-model="form.birthday"
           type="date"
           placeholder="选择日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item prop="phone" label="手机号">
-        <el-input class="reg-input" placeholder="请输入手机号" v-model="form.phone"></el-input>
+      <el-form-item prop="mobile" label="手机号">
+        <el-input class="reg-input" placeholder="请输入手机号" v-model="form.mobile"></el-input>
       </el-form-item>
       <el-form-item prop="email" label="邮箱">
         <el-input class="reg-input" placeholder="请输入邮箱" v-model="form.email"></el-input>
@@ -43,28 +43,48 @@
 </template>
 
 <script>
+
 export default {
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.form.rePWD !== '') {
+          this.$refs.form.validateField('rePWD')
+        }
+        callback()
+      }
+    }
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.form.pwd) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       form: {
-        username: '',
-        password: '',
+        user_name: '',
         pwd: '',
+        rePWD: '',
         name: '',
         gender: '',
-        date: '',
-        phone: '',
+        birthday: '',
+        mobile: '',
         email: '',
         address: ''
       },
       rules: {
-        username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        password: [{required: true, message: '请输入密码', trigger: 'blur'}],
-        pwd: [{required: true, message: '请再次输入密码', trigger: 'blur'}],
+        user_name: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+        pwd: [{validator: validatePass, trigger: 'blur'}],
+        rePWD: [{validator: validatePass2, trigger: 'blur'}],
         name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
         gender: [{required: true, message: '请选择性别', trigger: 'change'}],
-        date: [{required: true, message: '请选择出生年月', trigger: 'change'}],
-        phone: [{required: true, message: '请输入手机号码', trigger: 'blur'}],
+        birthday: [{required: true, message: '请选择出生年月', trigger: 'change'}],
+        mobile: [{required: true, message: '请输入手机号码', trigger: 'blur'}],
         email: [{required: true, message: '请输入邮箱', trigger: 'blur'}],
         address: [{required: true, message: '请输入地址', trigger: 'blur'}]
       }
@@ -75,9 +95,23 @@ export default {
     submitForm(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          alert('submit!')
+            console.log(this.form)
+            this.$http.post('user/reg', {
+              user_name: this.form.user_name,
+              pwd: this.form.pwd,
+              rePWD: this.form.rePWD,
+              name: this.form.name,
+              gender: this.form.gender,
+              birthday: this.form.birthday,
+              mobile: this.form.mobile,
+              email: this.form.email,
+              address: this.form.address
+            })
+            .then(resp => {
+              console.log(resp)
+            })
         } else {
-          console.log('error submit!!')
+          this.$message({ type: 'warning', message: '请完整填写相关信息' })
           return false
         }
       })
