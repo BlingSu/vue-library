@@ -12,7 +12,7 @@
             <h3>{{ item.title }}</h3>
             <div class="bom">
               <span class="author">{{ item.author }}</span>
-              <span class="price">{{ '￥' + item.price + '元'}}</span>
+              <span class="price">{{ '￥' + item.price}}</span>
               <button>借阅</button>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .search
-    width: 80%;
+    width: 80%
     margin: 20px auto
     .container
       margin:20px 0
@@ -78,6 +78,8 @@ export default {
         margin-bottom: 6px
         height: 22px
         line-height: 22px
+        text-overflow: ellipsis
+        white-space: nowrap
         overflow: hidden
       .bom
         height: 25px
@@ -86,7 +88,14 @@ export default {
       .author
         font-size: 12px
         color: #999
-        padding-right: 10px
+        padding-right: 7px
+        max-width: 70px
+        height: 25px
+        display: inline-block
+        float: left
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
       .price
         font-size: 14px
         color: #fd005b
@@ -98,4 +107,5 @@ export default {
         border-radius: 3px
         padding: 3px 8px
         float: right
+        cursor: pointer
 </style>
