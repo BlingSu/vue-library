@@ -6,9 +6,9 @@
       <el-menu-item index="2">书籍列表</el-menu-item>
       <el-submenu index="3" class="userInfo">
         <template slot="title">{{ name }}</template>
-        <el-menu-item index="userLogin">用户登录</el-menu-item>
-        <el-menu-item index="userReg">用户注册</el-menu-item>
-        <el-menu-item index="adminLogin">管理员登录</el-menu-item>
+        <el-menu-item index="user-login">用户登录</el-menu-item>
+        <el-menu-item index="user-reg">用户注册</el-menu-item>
+        <el-menu-item index="admin-login">管理员登录</el-menu-item>
         <el-menu-item index="logout">退出</el-menu-item>
       </el-submenu>
     </el-menu>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'app',
   data() {
@@ -29,9 +30,6 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
-      if(key == 'userReg' && keyPath[0] == 3) {
-        // this.$router.push({path: '/user-reg'})
-      }
     }
   }
 }
