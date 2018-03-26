@@ -13,7 +13,7 @@
             <div class="bom">
               <span class="author">{{ item.author }}</span>
               <span class="price">{{ '￥' + item.price}}</span>
-              <button>借阅</button>
+              <button @click="borrowRead">借阅</button>
             </div>
           </div>
         </div>
@@ -43,6 +43,10 @@ export default {
       .then(resp => {
         this.listData = resp.data.data
       })
+    },
+
+    borrowRead() {
+      this.$router.push({ path: '/user-reg' })
     }
   },
 
