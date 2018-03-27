@@ -30,7 +30,17 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
+    },
+
+    getName() {
+      if (localStorage.getItem('user_name')) {
+        this.name = localStorage.getItem('user_name')
+      }
     }
+  },
+
+  created() {
+    this.getName()
   }
 }
 </script>

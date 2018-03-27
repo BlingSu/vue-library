@@ -35,6 +35,8 @@ export default {
       this.$http.post('user/login', this.form)
       .then(resp => {
         this.$message({type: 'success', message: resp.data.message})
+        localStorage.setItem('user_name', this.form.userName)
+        this.$router.push({ path: '/' })
       })
     }
   }
