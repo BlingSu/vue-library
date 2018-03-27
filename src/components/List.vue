@@ -2,10 +2,10 @@
   <div>
     <div class="search">
       <el-input v-model="keyWord" placeholder="请输入关键字查询" slot="prepend">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
       </el-input>
 
-      <div class="container" v-loading="loading">
+      <div class="container">
         <div class="card" v-for="item in listData" :key="item._id">
           <img :src="item.img">
           <div class="info">
@@ -13,7 +13,7 @@
             <div class="bom">
               <span class="author">{{ item.author }}</span>
               <span class="price">{{ '￥' + item.price}}</span>
-              <button @click="borrowRead">借阅</button>
+              <button @click="handleBorrow">借阅</button>
             </div>
           </div>
         </div>
@@ -22,6 +22,15 @@
       <div class="load-more">
         <el-button type="danger" @click="getMoreData">加载更多</el-button>
       </div>
+
+
+      <el-dialog title="提示" :visible.sync="dialogVisible">
+        <span>请先登录，方可借阅</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleLogin">登录</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -34,16 +43,19 @@ export default {
       page: 1,
       author: '',
       listData: [],
-      loading: false
+      dialogVisible: false
     }
   },
 
   methods: {
     getData() {
-      this.loading = true
+      if (this.keyWord  !== '') {
+        this.listData = []
+      }
       this.$http.get('books/get_data', {
         params: {
-          page: this.page
+          page: this.page,
+          keyWord: this.keyWord
         }
       })
       .then(resp => {
@@ -59,7 +71,6 @@ export default {
             _id: item._id
           })
         })
-        this.loading = false
       })
     },
 
@@ -68,7 +79,15 @@ export default {
       this.getData()
     },
 
-    borrowRead() {
+    handleBorrow() {
+      if (localStorage.getItem('user_name')) {
+        console.log('成功借阅')
+      } else {
+        this.dialogVisible = true
+      }
+    },
+
+    handleLogin() {
       this.$router.push({ path: '/user-reg' })
     }
   },
