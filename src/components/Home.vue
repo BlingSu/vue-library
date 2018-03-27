@@ -5,7 +5,7 @@
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
 
-      <div class="container">
+      <div class="container" v-loading="loading">
         <div class="card" v-for="item in listData" :key="item._id">
           <img :src="item.img">
           <div class="info">
@@ -18,6 +18,10 @@
           </div>
         </div>
       </div>
+
+      <div class="load-more">
+        <el-button type="danger" @click="getMoreData">加载更多</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,20 +33,39 @@ export default {
       keyWord: '',
       page: 1,
       author: '',
-      listData: []
+      listData: [],
+      loading: false
     }
   },
 
   methods: {
     getData() {
+      this.loading = true
       this.$http.get('books/get_data', {
         params: {
           page: this.page
         }
       })
       .then(resp => {
-        this.listData = resp.data.data
+        let data = resp.data.data
+        data.forEach(item => {
+          this.listData.push({
+            author: item.author,
+            img: item.img,
+            link: item.link,
+            price: item.price,
+            title: item.title,
+            _v: item._v,
+            _id: item._id
+          })
+        })
+        this.loading = false
       })
+    },
+
+    getMoreData() {
+      this.page = this.page + 1
+      this.getData()
     },
 
     borrowRead() {
