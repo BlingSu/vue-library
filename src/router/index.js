@@ -8,6 +8,7 @@ export default new Router({
     { path: '/', redirect: '/list' },
     { name: 'list', path: '/list', component: () => import('components/List.vue') },
     { name: 'user-reg', path: '/user-reg', component: () => import('components/User/UserReg.vue') },
-    { name: 'login', path: '/login', component: () => import('components/User/Login.vue') }
+    { name: 'login', path: '/login', component: () => import('components/User/Login.vue') },
+    { name: 'admin-login', path: '/admin-login', component: () => import('components/Admin/Login.vue')}
   ]
 })
