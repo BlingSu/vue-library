@@ -8,7 +8,7 @@
         <template slot="title">{{ name }}</template>
         <el-menu-item index="user-login">用户登录</el-menu-item>
         <el-menu-item index="user-reg">用户注册</el-menu-item>
-        <el-menu-item index="admin-login">管理员登录</el-menu-item>
+        <el-menu-item index="admin/login">管理员登录</el-menu-item>
         <el-menu-item index="logout">退出</el-menu-item>
       </el-submenu>
     </el-menu>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+import getRouter from 'common/js/router'
 export default {
   name: 'app',
   data() {
@@ -29,7 +29,7 @@ export default {
 
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      this.$router.push(getRouter(key, keyPath))
     },
 
     getName() {
