@@ -5,7 +5,7 @@
         <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
       </el-input>
 
-      <div class="container">
+      <!-- <div class="container">
         <div class="card" v-for="item in listData" :key="item._id">
           <img :src="item.img">
           <div class="info">
@@ -21,6 +21,20 @@
 
       <div class="load-more">
         <el-button type="danger" @click="getMoreData">加载更多</el-button>
+      </div> -->
+      <div class="container">
+        <div v-for="item in listData" :key="item._id" class="content">
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="item.img" class="image">
+            <div style="padding: 14px;">
+              <span>{{ item.title }}</span>
+              <div class="bottom clearfix">
+                <time class="time">item.author</time>
+                <el-button type="text" class="button">借阅</el-button>
+              </div>
+            </div>
+          </el-card>
+        </div>
       </div>
 
 
@@ -103,55 +117,8 @@ export default {
     width: 80%
     margin: 20px auto
     .container
-      margin:20px 0
-    .card
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
-      width: 220px
-      display: inline-block
-      float: left
-      margin: 0 20px 20px 0
-      img
-        display: block
-        width: 220px
-        height: 200px
-      .info
-        padding: 12px
-      h3
-        margin: 0
-        color: #303133
-        font-weight: normal
-        font-size: 14px
-        margin-bottom: 6px
-        height: 22px
-        line-height: 22px
-        text-overflow: ellipsis
-        white-space: nowrap
-        overflow: hidden
-      .bom
-        height: 25px
-        overflow: hidden
-        line-height: 25px
-      .author
-        font-size: 12px
-        color: #999
-        padding-right: 7px
-        max-width: 70px
-        height: 25px
+      margin: 20px auto
+      .content
+        width: 20%
         display: inline-block
-        float: left
-        text-overflow: ellipsis
-        white-space: nowrap
-        overflow: hidden
-      .price
-        font-size: 14px
-        color: #fd005b
-      button
-        background: #5b97fc
-        color: #fff
-        font-size: 14px
-        border: 0
-        border-radius: 3px
-        padding: 3px 8px
-        float: right
-        cursor: pointer
 </style>
