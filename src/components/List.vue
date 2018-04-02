@@ -13,7 +13,7 @@
               <span class="book-title">{{ item.title }}</span>
               <div class="bottom">
                 <time class="time">{{ item.author }}</time>
-                <el-button type="text" class="button" @click="handleBorrow">借阅</el-button>
+                <el-button type="text" class="button" @click="handleBorrow(item)">借阅</el-button>
               </div>
             </div>
           </el-card>
@@ -22,13 +22,6 @@
 
       <el-button style="width: 100%;" type="danger" @click="getMoreData">加载更多</el-button>
 
-      <el-dialog title="提示" :visible.sync="dialogVisible">
-        <span>请先登录，方可借阅</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleLogin">登录</el-button>
-        </span>
-      </el-dialog>
     </div>
   </div>
 </template>
@@ -40,8 +33,7 @@ export default {
       keyWord: '',
       page: 1,
       author: '',
-      listData: [],
-      dialogVisible: false
+      listData: []
     }
   },
 
@@ -77,12 +69,14 @@ export default {
       this.getData()
     },
 
-    handleBorrow() {
-      if (localStorage.getItem('user_name')) {
-        this.$message({ type: success, message: '借阅成功😄' })
-      } else {
-        this.dialogVisible = true
-      }
+    handleBorrow(data) {
+      this.$http.post('books/pick', {
+        id: data._id,
+        user_id: localStorage.getItem('user_id')
+      })
+      .then(resp => {
+        this.$message({ type: 'success', message: resp.data.message })
+      })
     },
 
     handleLogin() {

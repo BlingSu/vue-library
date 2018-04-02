@@ -36,6 +36,7 @@ export default {
       .then(resp => {
         this.$message({type: 'success', message: resp.data.message})
         localStorage.setItem('user_name', this.form.userName)
+        localStorage.setItem('user_id', resp.data.data.user_id)
         this.$router.push({ path: '/' })
       })
     }
