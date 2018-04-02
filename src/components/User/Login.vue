@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import storage from 'common/js/store'
+
 export default {
   data() {
     return {
@@ -35,9 +37,10 @@ export default {
       this.$http.post('user/login', this.form)
       .then(resp => {
         this.$message({type: 'success', message: resp.data.message})
-        localStorage.setItem('user_name', this.form.userName)
-        localStorage.setItem('user_id', resp.data.data.user_id)
+        storage().set('user_name', this.form.userName)
+        storage().set('user_id', resp.data.data.user_id)
         this.$router.push({ path: '/' })
+        // 后添加刷新
       })
     }
   }

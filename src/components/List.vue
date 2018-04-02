@@ -2,7 +2,7 @@
   <div>
     <div class="search">
       <el-input v-model="keyWord" placeholder="请输入关键字查询" slot="prepend">
-        <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
+        <el-button slot="append" icon="el-icon-search" disabled></el-button>
       </el-input>
 
       <div class="container">
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import storage from 'common/js/store'
+
 export default {
   data() {
     return {
@@ -37,9 +39,15 @@ export default {
     }
   },
 
+  watch: {
+    keyWord() {
+      this.getData()
+    }
+  },
+
   methods: {
     getData() {
-      if (this.keyWord  !== '') {
+      if (this.keyWord !== '') {
         this.listData = []
       }
       this.$http.get('books/get_data', {
@@ -72,7 +80,7 @@ export default {
     handleBorrow(data) {
       this.$http.post('books/pick', {
         id: data._id,
-        user_id: localStorage.getItem('user_id')
+        user_id: JSON.parse(storage().get('user_id'))
       })
       .then(resp => {
         this.$message({ type: 'success', message: resp.data.message })

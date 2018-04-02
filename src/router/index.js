@@ -19,7 +19,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(res => res.meta.requireAuth)) {
-    if (storage().remove('user_name') && storage().remove('user_id')) {
+    if (storage().get('user_name') && storage().get('user_id')) {
       next()
     } else {
       Message({ message: "登录状态信息过期,请重新登录", type: 'error' })

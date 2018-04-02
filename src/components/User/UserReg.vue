@@ -98,7 +98,7 @@ export default {
             this.$http.post('user/reg', this.form)
             .then(resp => {
               this.$message({ type: 'success', message: resp.data.message })
-              this.$router.push({ path: '/login' })
+              this.$router.push({ path: '/' })
             })
         } else {
           this.$message({ type: 'warning', message: '请完整填写相关信息' })

@@ -3,14 +3,13 @@
     <el-menu
       :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">图书借阅系统</el-menu-item>
-      <el-menu-item index="2">书籍列表</el-menu-item>
+      <el-menu-item index="user-center">个人中心</el-menu-item>
       <el-submenu index="3" class="userInfo">
         <template slot="title">{{ name }}</template>
-        <el-menu-item index="user-center">个人中心</el-menu-item>
         <el-menu-item index="user-login">用户登录</el-menu-item>
         <el-menu-item index="user-reg">用户注册</el-menu-item>
         <el-menu-item index="admin/login">管理员登录</el-menu-item>
-        <el-menu-item index="logout">退出</el-menu-item>
+        <el-menu-item index="logout" @click="logout">退出</el-menu-item>
       </el-submenu>
     </el-menu>
     <router-view></router-view>
@@ -19,12 +18,14 @@
 
 <script>
 import getRouter from 'common/js/router'
+import storage from 'common/js/store'
+
 export default {
   name: 'app',
   data() {
     return {
       activeIndex: '1',
-      name: '个人中心'
+      name: '用户'
     }
   },
 
@@ -34,9 +35,17 @@ export default {
     },
 
     getName() {
-      if (localStorage.getItem('user_name')) {
-        this.name = localStorage.getItem('user_name')
+      if (storage().get('user_name')) {
+        this.name = JSON.parse(storage().get('user_name'))
       }
+    },
+
+    logout() {
+      storage().remove('user_id')
+      storage().remove('user_name')
+      this.$router.push('/')
+      this.$message({type: 'info', message: '退出成功～'})
+      // 刷新
     }
   },
 

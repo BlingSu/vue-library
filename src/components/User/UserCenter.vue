@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import storage from 'common/js/store'
+
 export default {
   data() {
     return {
@@ -35,7 +37,7 @@ export default {
     getTableData() {
       this.$http.get('user/user_info', {
         params: {
-          user_id: localStorage.getItem('user_id')
+          user_id: JSON.parse(storage().get('user_id'))
         }
       })
       .then(resp => {
