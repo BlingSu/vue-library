@@ -5,31 +5,14 @@
         <el-button slot="append" icon="el-icon-search" @click="getData"></el-button>
       </el-input>
 
-      <!-- <div class="container">
-        <div class="card" v-for="item in listData" :key="item._id">
-          <img :src="item.img">
-          <div class="info">
-            <h3>{{ item.title }}</h3>
-            <div class="bom">
-              <span class="author">{{ item.author }}</span>
-              <span class="price">{{ '￥' + item.price}}</span>
-              <button @click="handleBorrow">借阅</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="load-more">
-        <el-button type="danger" @click="getMoreData">加载更多</el-button>
-      </div> -->
       <div class="container">
         <div v-for="item in listData" :key="item._id" class="content">
           <el-card :body-style="{ padding: '0px' }">
             <img :src="item.img" class="image">
             <div style="padding: 14px;">
-              <span>{{ item.title }}</span>
-              <div class="bottom clearfix">
-                <time class="time">item.author</time>
+              <span class="book-title">{{ item.title }}</span>
+              <div class="bottom">
+                <time class="time">{{ item.author }}</time>
                 <el-button type="text" class="button">借阅</el-button>
               </div>
             </div>
@@ -37,6 +20,7 @@
         </div>
       </div>
 
+      <el-button style="width: 100%;" type="danger" @click="getMoreData">加载更多</el-button>
 
       <el-dialog title="提示" :visible.sync="dialogVisible">
         <span>请先登录，方可借阅</span>
@@ -121,4 +105,22 @@ export default {
       .content
         width: 20%
         display: inline-block
+        .image
+          width: 100%
+        .book-title
+          width: 100%
+          display: block
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
+        .time
+          width: 50%
+          display: inline-block
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
+          float: left
+          line-height: 40px
+        .button
+          float: right
 </style>
