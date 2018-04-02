@@ -6,6 +6,7 @@
       <el-menu-item index="2">书籍列表</el-menu-item>
       <el-submenu index="3" class="userInfo">
         <template slot="title">{{ name }}</template>
+        <el-menu-item index="user-center">个人中心</el-menu-item>
         <el-menu-item index="user-login">用户登录</el-menu-item>
         <el-menu-item index="user-reg">用户注册</el-menu-item>
         <el-menu-item index="admin/login">管理员登录</el-menu-item>

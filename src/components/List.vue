@@ -13,7 +13,7 @@
               <span class="book-title">{{ item.title }}</span>
               <div class="bottom">
                 <time class="time">{{ item.author }}</time>
-                <el-button type="text" class="button">借阅</el-button>
+                <el-button type="text" class="button" @click="handleBorrow">借阅</el-button>
               </div>
             </div>
           </el-card>
@@ -79,14 +79,14 @@ export default {
 
     handleBorrow() {
       if (localStorage.getItem('user_name')) {
-        console.log('成功借阅')
+        this.$message({ type: success, message: '借阅成功😄' })
       } else {
         this.dialogVisible = true
       }
     },
 
     handleLogin() {
-      this.$router.push({ path: '/user-reg' })
+      this.$router.push({ path: '/user-login' })
     }
   },
 

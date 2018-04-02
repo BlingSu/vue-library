@@ -9,6 +9,7 @@ export default new Router({
     { name: 'list', path: '/list', component: () => import('components/List.vue') },
     { name: 'user-reg', path: '/user-reg', component: () => import('components/User/UserReg.vue') },
     { name: 'user-login', path: '/user-login', component: () => import('components/User/Login.vue') },
-    { name: 'adminLogin', path: '/admin/login', component: () => import('components/Admin/Login.vue')}
+    { name: 'user-center', path: '/user-center', component: () => import('components/User/UserCenter.vue')},
+    { name: 'adminLogin', path: '/admin/login', component: () => import('components/Admin/Login.vue')},
   ]
 })
