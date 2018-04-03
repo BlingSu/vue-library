@@ -30,6 +30,11 @@ export default {
     handleLogin() {
 
     }
+
+
+  },
+
+  created() {
   }
 }
 </script>
@@ -38,5 +43,5 @@ export default {
 .login
   margin: 20px auto
   .login-input
-    width: 80%
+    width: calc(100% - 120px)
 </style>

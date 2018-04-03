@@ -9,5 +9,8 @@ export default {
   },
   user_name ({commit}) {
     commit(types.USER_NAME)
+  },
+  admin_login ({commit}) {
+    commit(types.ADMIN_LOGIN)
   }
 }

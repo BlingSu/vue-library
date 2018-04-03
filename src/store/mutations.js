@@ -9,5 +9,8 @@ export default {
   },
   [types.USER_NAME] (state) {
     state.user_name = '用户'
+  },
+  [types.ADMIN_LOGIN] (state) {
+    state.admin_login = !state.admin_login
   }
 }

@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const state = {
   login_status: false,
   logout_status: false,
-  user_name: ''
+  user_name: '',
+  admin_login: false
 }
 
 export default new Vuex.Store({
