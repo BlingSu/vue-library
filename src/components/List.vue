@@ -1,5 +1,6 @@
 <template>
   <div>
+    <m-header></m-header>
     <div class="search">
       <el-input v-model="keyWord" placeholder="请输入关键字查询" slot="prepend">
         <el-button slot="append" icon="el-icon-search" disabled></el-button>
@@ -29,8 +30,12 @@
 <script>
 import storage from 'common/js/store'
 import {mapState} from 'vuex'
+import mHeader from './Header.vue'
 
 export default {
+  components: {
+    mHeader
+  },
   data() {
     return {
       keyWord: '',

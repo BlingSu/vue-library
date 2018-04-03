@@ -1,5 +1,6 @@
 <template>
   <div>
+    <m-header></m-header>
     <h3>用户个人中心</h3>
     <el-table :data="tableData" border stripe class="e-table">
       <el-table-column type="index" label="序号" width="80"></el-table-column>
@@ -17,8 +18,12 @@
 <script>
 import storage from 'common/js/store'
 import {mapState} from 'vuex'
+import mHeader from '../Header.vue'
 
 export default {
+  components: {
+    mHeader
+  },
   data() {
     return {
       tableData: []
