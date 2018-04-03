@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>用户个人中心</h3>
     <el-table :data="tableData" border stripe class="e-table">
       <el-table-column type="index" label="序号" width="80"></el-table-column>
       <el-table-column label="书名" prop="book_id.title"></el-table-column>
@@ -70,4 +71,6 @@ export default {
 .e-table
   width: 80%;
   margin: 20px auto
+h3
+  margin-left: 120px
 </style>

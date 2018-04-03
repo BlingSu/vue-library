@@ -1,5 +1,6 @@
 <template>
   <div class="reg">
+    <h3>用户注册</h3>
     <el-form :model="form" :rules="rules" ref="form" label-width="120px">
       <el-form-item label="用户名" prop="user_name">
         <el-input class="reg-input" placeholder="请输入你的用户名" v-model="form.user_name"></el-input>
@@ -114,6 +115,8 @@ export default {
   .reg
     width: 1200px
     margin: 20px auto
+    h3
+      margin-left: 120px
     .reg-input
       width: 80%
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <h3>用户登陆</h3>
     <el-form :model="form" ref="form" label-width="120px">
       <el-form-item label="用户名">
         <el-input class="login-input" v-model="form.userName" placeholder="请输入用户名"></el-input>
@@ -53,6 +54,8 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .login
   margin: 20px auto
+  h3
+    margin-left: 120px
   .login-input
     width: 80%
 </style>
