@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <el-menu
+      v-show="showMenu"
       :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">图书借阅系统</el-menu-item>
       <el-menu-item index="user-center">个人中心</el-menu-item>
@@ -25,7 +26,8 @@ export default {
   data() {
     return {
       activeIndex: '1',
-      name: '用户'
+      name: '用户',
+      showMenu: true
     }
   },
 
@@ -38,11 +40,14 @@ export default {
     },
     user_name(name) {
       this.name = name
+    },
+    admin_login(v) {
+      this.showMenu = !v
     }
   },
 
   computed: {
-    ...mapState(['login_status', 'user_name'])
+    ...mapState(['login_status', 'user_name', 'admin_login'])
   },
 
   methods: {
