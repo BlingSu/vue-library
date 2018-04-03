@@ -5,7 +5,7 @@
         <el-input class="login-input" v-model="form.userName" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input class="login-input" v-model="form.userPWD" placeholder="请输入密码"></el-input>
+        <el-input class="login-input" v-model="form.userPWD" placeholder="请输入密码" @keyup.enter.native="loginSubmit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleLogin">登录</el-button>
@@ -40,8 +40,11 @@ export default {
         storage().set('user_name', this.form.userName)
         storage().set('user_id', resp.data.data.user_id)
         this.$store.dispatch('login_status')
-        // this.$router.push({ path: '/list' })
       })
+    },
+
+    loginSubmit() {
+      this.handleLogin()
     }
   }
 }

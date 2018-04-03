@@ -7,7 +7,7 @@
       <el-submenu index="3" class="userInfo">
         <template slot="title">{{ name }}</template>
         <el-menu-item v-show="name == '用户'" index="user-login">用户登录</el-menu-item>
-        <el-menu-item index="user-reg">用户注册</el-menu-item>
+        <el-menu-item v-show="name == '用户'" index="user-reg">用户注册</el-menu-item>
         <el-menu-item index="admin/login">管理员登录</el-menu-item>
         <el-menu-item index="logout" @click="logout">退出</el-menu-item>
       </el-submenu>
