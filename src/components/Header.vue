@@ -31,22 +31,22 @@ export default {
   },
 
   watch: {
-    login_status(val) {
-      if (val) {
-        this.$router.push({path: '/'})
-        this.name = JSON.parse(storage().get('user_name'))
-      }
-    },
-    user_name(name) {
-      this.name = name
-    },
+    // login_status(val) {
+    //   if (val) {
+    //     this.$router.push({path: '/'})
+    //     this.name = JSON.parse(storage().get('user_name'))
+    //   }
+    // },
+    // user_name(name) {
+    //   this.name = name
+    // },
     admin_login(v) {
       this.showMenu = !v
     }
   },
 
   computed: {
-    ...mapState(['login_status', 'user_name', 'admin_login'])
+    ...mapState(['user_name', 'admin_login'])
   },
 
   methods: {

@@ -41,6 +41,7 @@ export default {
         storage().set('user_name', this.form.userName)
         storage().set('user_id', resp.data.data.user_id)
         this.$store.dispatch('login_status')
+        this.$router.push({path: '/'})
       })
     },
 
