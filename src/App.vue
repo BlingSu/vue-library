@@ -19,6 +19,7 @@
 <script>
 import getRouter from 'common/js/router'
 import storage from 'common/js/store'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -41,11 +42,16 @@ export default {
     },
 
     logout() {
-      storage().remove('user_id')
-      storage().remove('user_name')
-      this.$router.push('/')
-      this.$message({type: 'info', message: '退出成功～'})
-      // 刷新
+      if (storage().get('user_id') && storage().get('user_name')) {
+        storage().remove('user_id')
+        storage().remove('user_name')
+        this.$router.push('/')
+        this.$message({type: 'info', message: '退出成功～'})
+        this.$store.dispatch('logoutStatus')
+        // 刷新
+      } else {
+        this.$message({type: 'info', message: '未登录，退出错误'})
+      }
     }
   },
 

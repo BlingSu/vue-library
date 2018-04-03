@@ -3,16 +3,16 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 import App from './App'
 import router from './router/index'
-import Vuex from 'vuex'
+import store from './store/index'
 
 import axiosPlugin from 'common/js/server'
 Vue.use(axiosPlugin)
 
 Vue.use(ElementUI)
-Vue.use(Vuex)
 
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

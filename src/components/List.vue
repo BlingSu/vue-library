@@ -42,6 +42,18 @@ export default {
   watch: {
     keyWord() {
       this.getData()
+    },
+    getLogoutStatus(val) {
+      if (val) {
+        this.listData = []
+        this.getData()
+      }
+    }
+  },
+
+  computed: {
+    getLogoutStatus() {
+      return this.$store.state.logoutStatus
     }
   },
 
