@@ -15,11 +15,25 @@
 
 <script>
 import storage from 'common/js/store'
+import {mapState} from 'vuex'
 
 export default {
   data() {
     return {
       tableData: []
+    }
+  },
+
+  computed: {
+    ...mapState(['logout_status'])
+  },
+
+  watch: {
+    logout_status(v) {
+      if (v) {
+        this.$router.push({path: '/'})
+        this.$store.dispatch('user_name')
+      }
     }
   },
 

@@ -6,7 +6,9 @@ import actions from './actions.js'
 Vue.use(Vuex)
 
 const state = {
-  logoutStatus: false
+  login_status: false,
+  logout_status: false,
+  user_name: ''
 }
 
 export default new Vuex.Store({

@@ -6,7 +6,7 @@
       <el-menu-item index="user-center">个人中心</el-menu-item>
       <el-submenu index="3" class="userInfo">
         <template slot="title">{{ name }}</template>
-        <el-menu-item index="user-login">用户登录</el-menu-item>
+        <el-menu-item v-show="name == '用户'" index="user-login">用户登录</el-menu-item>
         <el-menu-item index="user-reg">用户注册</el-menu-item>
         <el-menu-item index="admin/login">管理员登录</el-menu-item>
         <el-menu-item index="logout" @click="logout">退出</el-menu-item>
@@ -30,6 +30,22 @@ export default {
     }
   },
 
+  watch: {
+    login_status(val) {
+      if (val) {
+        this.$router.push({path: '/'})
+        this.name = JSON.parse(storage().get('user_name'))
+      }
+    },
+    user_name(name) {
+      this.name = name
+    }
+  },
+
+  computed: {
+    ...mapState(['login_status', 'user_name'])
+  },
+
   methods: {
     handleSelect(key, keyPath) {
       this.$router.push(getRouter(key, keyPath))
@@ -45,9 +61,8 @@ export default {
       if (storage().get('user_id') && storage().get('user_name')) {
         storage().remove('user_id')
         storage().remove('user_name')
-        this.$router.push('/')
         this.$message({type: 'info', message: '退出成功～'})
-        this.$store.dispatch('logoutStatus')
+        this.$store.dispatch('logout_status')
         // 刷新
       } else {
         this.$message({type: 'info', message: '未登录，退出错误'})

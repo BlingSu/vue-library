@@ -1,7 +1,13 @@
 import * as types from './mutations-types'
 
 export default {
-  logoutStatus ({commit}) {
+  login_status ({commit}) {
+    commit(types.LOGIN_STATUS)
+  },
+  logout_status ({commit}) {
     commit(types.LOGOUT_STATUS)
+  },
+  user_name ({commit}) {
+    commit(types.USER_NAME)
   }
 }

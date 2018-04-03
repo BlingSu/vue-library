@@ -28,6 +28,7 @@
 
 <script>
 import storage from 'common/js/store'
+import {mapState} from 'vuex'
 
 export default {
   data() {
@@ -43,18 +44,16 @@ export default {
     keyWord() {
       this.getData()
     },
-    getLogoutStatus(val) {
+    logout_status(val) {
       if (val) {
-        this.listData = []
-        this.getData()
+        this.$router.push({path: '/list'})
+        this.$store.dispatch('user_name')
       }
     }
   },
 
   computed: {
-    getLogoutStatus() {
-      return this.$store.state.logoutStatus
-    }
+    ...mapState(['logout_status'])
   },
 
   methods: {

@@ -39,8 +39,8 @@ export default {
         this.$message({type: 'success', message: resp.data.message})
         storage().set('user_name', this.form.userName)
         storage().set('user_id', resp.data.data.user_id)
-        this.$router.push({ path: '/' })
-        // 后添加刷新
+        this.$store.dispatch('login_status')
+        // this.$router.push({ path: '/list' })
       })
     }
   }
