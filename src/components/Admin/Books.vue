@@ -10,10 +10,10 @@
     <div class="content">
       <el-form :inline="true" :model="form" class="demo-form-inline">
         <el-form-item label="姓名">
-          <el-input v-model="name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input v-model="phone" placeholder="请输入手机号"></el-input>
+          <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary">查询</el-button>
@@ -22,6 +22,20 @@
 
       <el-table :data="tableData" border stripe class="e-table">
         <el-table-column type="index" label="序号" width="80"></el-table-column>
+        <el-table-column label="姓名" prop="name"></el-table-column>
+        <el-table-column label="性别" prop="gender"></el-table-column>
+        <el-table-column label="年龄" prop="age"></el-table-column>
+        <el-table-column label="出生日期" prop="birthday"></el-table-column>
+        <el-table-column label="手机号" prop="mobile"></el-table-column>
+        <el-table-column label="邮箱" prop="email"></el-table-column>
+        <el-table-column label="地址" prop="address"></el-table-column>
+        <el-table-column label="操作" width="200">
+          <template slot-scope="scope">
+            <el-button type="text">修改</el-button>
+            <el-button type="text">删除</el-button>
+            <el-button type="text">借阅信息</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -34,7 +48,12 @@ export default {
   data() {
     return {
       nowTime: null,
-      form: {}
+      form: {
+        name: '',
+        mobile: ''
+      },
+      tableData: [],
+      page: 1
     }
   },
 
@@ -45,11 +64,19 @@ export default {
         this.$message({type: 'error', message: '管理员信息过期，请重新登录'})
         this.$router.push({path: '/admin/login'})
       }
+    },
+
+    getData() {
+      this.$http.get('admin/list',{ params: {page: this.page } })
+      .then(resp => {
+        this.tableData = resp.data.data
+      })
     }
   },
 
   created() {
     this.getToken()
+    this.getData()
   }
 }
 </script>
