@@ -16,7 +16,7 @@
           <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="getData">查询</el-button>
         </el-form-item>
       </el-form>
 
@@ -46,6 +46,16 @@
         </el-table-column>
       </el-table>
     </div>
+
+    <el-pagination
+      :current-page="page"
+      :page-size="perPage"
+      :page-sizes="[1, 20, 40, 100, 200]"
+      :total="total"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+      layout="total, sizes, prev, pager, next, jumper">
+    </el-pagination>
   </div>
 </template>
 
@@ -62,7 +72,9 @@ export default {
         mobile: ''
       },
       tableData: [],
-      page: 1
+      page: 1,
+      perPage: 10,
+      total: null
     }
   },
 
@@ -76,9 +88,19 @@ export default {
     },
 
     getData() {
-      this.$http.get('admin/list',{ params: {page: this.page } })
+      this.$http.get('admin/list',{
+        params: {
+          page: this.page,
+          per_page: this.perPage,
+          name: this.form.name,
+          mobile: this.form.mobile
+        }
+      })
       .then(resp => {
         this.tableData = resp.data.data
+        this.total = resp.data.total
+        this.per_page = +resp.data.per_page
+        this.page = resp.data.current_page
       })
     },
 
@@ -88,7 +110,17 @@ export default {
 
     age(t) {
       return formatDate(new Date()).substr(0, 4) - formatDate(t).substr(0, 4)
+    },
+
+    handleCurrentChange(page) {
+      this.page = page
+      this.getData()
+    },
+    handleSizeChange(perPage) {
+      this.perPage = perPage
+      this.getData()
     }
+
   },
 
   created() {
