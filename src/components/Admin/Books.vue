@@ -22,10 +22,18 @@
 
       <el-table :data="tableData" border stripe class="e-table">
         <el-table-column type="index" label="序号" width="80"></el-table-column>
-        <el-table-column label="姓名" prop="name"></el-table-column>
-        <el-table-column label="性别" prop="gender"></el-table-column>
-        <el-table-column label="年龄" prop="age"></el-table-column>
-        <el-table-column label="出生日期" prop="birthday"></el-table-column>
+        <el-table-column label="姓名" prop="name" width="80"></el-table-column>
+        <el-table-column label="性别" prop="gender" width="80"></el-table-column>
+        <el-table-column label="年龄" width="80">
+          <template slot-scope="scope">
+            {{ age(scope.row.birthday) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="出生日期">
+          <template slot-scope="scope">
+            {{ time(scope.row.birthday) }}
+          </template>
+        </el-table-column>
         <el-table-column label="手机号" prop="mobile"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="地址" prop="address"></el-table-column>
@@ -43,6 +51,7 @@
 
 <script>
 import storage from 'common/js/store'
+import formatDate from 'common/js/date'
 
 export default {
   data() {
@@ -71,6 +80,14 @@ export default {
       .then(resp => {
         this.tableData = resp.data.data
       })
+    },
+
+    time(t) {
+      return formatDate(t)
+    },
+
+    age(t) {
+      return formatDate(new Date()).substr(0, 4) - formatDate(t).substr(0, 4)
     }
   },
 

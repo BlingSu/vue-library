@@ -8,7 +8,7 @@
       <el-table-column label="作者" prop="book_id.author"></el-table-column>
       <el-table-column label="借阅时间">
         <template slot-scope="scope">
-          {{ formatDate(scope.row.booked_date) }}
+          {{ time(scope.row.booked_date) }}
         </template>
       </el-table-column>
     </el-table>
@@ -19,6 +19,7 @@
 import storage from 'common/js/store'
 import {mapState} from 'vuex'
 import mHeader from '../Header.vue'
+import formatDate from 'common/js/date'
 
 export default {
   components: {
@@ -44,16 +45,6 @@ export default {
   },
 
   methods: {
-    formatDate(val) {
-      let d = new Date(val)
-      let year = d.getFullYear()
-      let month = d.getMonth() +1 < 10 ? `0${d.getMonth() + 1}` : d.getMonth() +1
-      let day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()
-      let hour = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()
-      let minute = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
-      let second = d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds()
-      return `${year}-${month}-${day} ${hour}:${minute}:${second}`
-    },
     getTableData() {
       this.$http.get('user/user_info', {
         params: {
@@ -63,6 +54,9 @@ export default {
       .then(resp => {
         this.tableData = resp.data.books
       })
+    },
+    time(t) {
+      return formatDate(t)
     }
   },
 
