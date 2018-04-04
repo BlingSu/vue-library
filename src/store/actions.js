@@ -12,5 +12,8 @@ export default {
   },
   admin_login ({commit}) {
     commit(types.ADMIN_LOGIN)
+  },
+  user_data ({commit}, obj) {
+    commit(types.USER_DATA, obj)
   }
 }

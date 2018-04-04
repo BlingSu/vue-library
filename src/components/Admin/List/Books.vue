@@ -39,7 +39,7 @@
         <el-table-column label="地址" prop="address"></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="text">修改</el-button>
+            <el-button type="text" @click="editUserData(scope.row)">修改</el-button>
             <el-button type="text">删除</el-button>
             <el-button type="text">借阅信息</el-button>
           </template>
@@ -115,6 +115,11 @@ export default {
     },
 
     createUser() {
+      this.$store.dispatch('user_data', 1)
+      this.$router.push('operate')
+    },
+    editUserData(scope) {
+      this.$store.dispatch('user_data', scope)
       this.$router.push('operate')
     },
 

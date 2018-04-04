@@ -112,11 +112,11 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .reg
-    width: 1200px
-    margin: 20px auto
-    h3
-      margin-left: 120px
-    .reg-input
-      width: 80%
+.reg
+  width: 1200px
+  margin: 20px auto
+  h3
+    margin-left: 120px
+  .reg-input
+    width: 80%
 </style>

@@ -12,5 +12,8 @@ export default {
   },
   [types.ADMIN_LOGIN] (state) {
     state.admin_login = !state.admin_login
+  },
+  [types.USER_DATA] (state, scope) {
+    state.user_data = Object.assign({}, scope)
   }
 }

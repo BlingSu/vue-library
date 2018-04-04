@@ -9,3 +9,5 @@ export const USER_NAME = 'USER_NAME'
 
 // 管理员
 export const ADMIN_LOGIN = 'ADMIN_LOGIN'
+
+export const USER_DATA = 'USER_DATA'
