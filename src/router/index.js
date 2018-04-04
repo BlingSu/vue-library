@@ -13,6 +13,7 @@ const router = new Router({
     { name: 'user-login', path: '/user-login', component: () => import('components/User/Login.vue') },
     { name: 'user-center', path: '/user-center', component: () => import('components/User/UserCenter.vue'), meta: { requireAuth: true} },
     { name: 'adminLogin', path: '/admin/login', component: () => import('components/Admin/Login.vue') },
+    { name: 'adminBooks', path: '/admin/books', component: () => import('components/Admin/Books.vue') },
   ]
 })
 
