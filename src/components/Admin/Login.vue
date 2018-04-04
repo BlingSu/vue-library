@@ -35,7 +35,7 @@ export default {
       .then(resp => {
         this.$message({ type: 'success', message: resp.data.message })
         storage().set('admin_token', {admin: 'admin', token: Math.random(), time: new Date().getTime()})
-        this.$router.push({path: '/admin/books'})
+        this.$router.push({path: '/admin/list/books'})
       })
     },
 

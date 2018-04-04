@@ -3,7 +3,7 @@
     <div class="header">
       <h3>用户信息列表</h3>
       <div class="create">
-        <el-button type="success">新增</el-button>
+        <el-button type="success" @click="createUser">新增</el-button>
       </div>
     </div>
 
@@ -47,15 +47,17 @@
       </el-table>
     </div>
 
-    <el-pagination
-      :current-page="page"
-      :page-size="perPage"
-      :page-sizes="[1, 20, 40, 100, 200]"
-      :total="total"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-      layout="total, sizes, prev, pager, next, jumper">
-    </el-pagination>
+    <div class="book-pagination">
+      <el-pagination
+        :current-page="page"
+        :page-size="perPage"
+        :page-sizes="[1, 20, 40, 100, 200]"
+        :total="total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -112,6 +114,10 @@ export default {
       return formatDate(new Date()).substr(0, 4) - formatDate(t).substr(0, 4)
     },
 
+    createUser() {
+      this.$router.push('operate')
+    },
+
     handleCurrentChange(page) {
       this.page = page
       this.getData()
@@ -120,7 +126,6 @@ export default {
       this.perPage = perPage
       this.getData()
     }
-
   },
 
   created() {
@@ -144,5 +149,11 @@ export default {
     line-height: 64px
 .content
   width: 1200px
-  margin: 0 auto;
+  margin: 0 auto
+.book-pagination
+  width: 1200px
+  margin: 20px auto
+  overflow: hidden
+  .el-pagination
+    float: right
 </style>

@@ -12,8 +12,9 @@ const router = new Router({
     { name: 'user-reg', path: '/user-reg', component: () => import('components/User/UserReg.vue') },
     { name: 'user-login', path: '/user-login', component: () => import('components/User/Login.vue') },
     { name: 'user-center', path: '/user-center', component: () => import('components/User/UserCenter.vue'), meta: { requireAuth: true} },
-    { name: 'adminLogin', path: '/admin/login', component: () => import('components/Admin/Login.vue') },
-    { name: 'adminBooks', path: '/admin/books', component: () => import('components/Admin/Books.vue') },
+    { name: 'admin-login', path: '/admin/login', component: () => import('components/Admin/Login.vue') },
+    { name: 'admin-books', path: '/admin/list/books', component: () => import('components/Admin/List/Books.vue') },
+    { name: 'admin-operate', path: '/admin/list/operate', component: () => import('components/Admin/List/Operate.vue') }
   ]
 })
 
