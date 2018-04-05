@@ -83,9 +83,14 @@ export default {
   methods: {
     getToken() {
       this.nowTime = new Date().getTime()
-      if (this.nowTime - JSON.parse(storage().get('admin_token')).time > 3600000) {
+      if (storage().get('admin_token') == null) {
         this.$message({type: 'error', message: '管理员信息过期，请重新登录'})
         this.$router.push({path: '/admin/login'})
+      } else {
+        if (this.nowTime - JSON.parse(storage().get('admin_token')).time > 3600000) {
+          this.$message({type: 'error', message: '管理员信息过期，请重新登录'})
+          this.$router.push({path: '/admin/login'})
+        }
       }
     },
 
