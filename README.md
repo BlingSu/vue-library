@@ -6,9 +6,9 @@
 
 > [爬虫地址]()
 
-> [SSR版本]()
+> [SSR版本](https://github.com/angelasubi/library-borrow)
 
-> [react版本]()
+> [react版本](https://github.com/angelasubi/react-library)
 
 ### 使用说明
 
