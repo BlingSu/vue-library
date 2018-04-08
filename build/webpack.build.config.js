@@ -1,19 +1,21 @@
 const path = require('path')
 const webpack = require('webpack')
-
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 module.exports = {
-  entry: path.join(__dirname, '../src/main.js'),
-
-  devtool: 'inline-source-map',
-
-  output: {
-    path: path.join(__dirname, '../dist'),
-    filename: 'bundle.[hash].js',
+  entry: {
+    app: [path.join(__dirname, '../src/main.js'),],
+    vendor: ['vue', 'vue-router', 'axios', 'element-ui', 'vuex']
   },
 
+  devtool: 'cheap-module-source-map',
+
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js'
+  },
   module: {
     rules: [
       {
@@ -52,7 +54,8 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
+  new CleanWebpackPlugin(['dist']),
+  new HtmlWebpackPlugin({
       title: 'title',
       template: path.join(__dirname, '../index.html'),
       inject: true,
@@ -62,18 +65,6 @@ module.exports = {
         removeAttributeQuotes: true
       }
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:8888' }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
-
-  devServer: {
-    contentBase: path.join(__dirname, '../dist'),
-    port: 8888,
-    historyApiFallback: true,
-    host: '0.0.0.0',
-    hot: true
-  }
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') })
+  ]
 }
