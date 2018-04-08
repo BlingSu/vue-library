@@ -41,7 +41,7 @@
           <template slot-scope="scope">
             <el-button type="text" @click="editUserData(scope.row)">修改</el-button>
             <el-button type="text" @click="deleteUserData(scope.row)">删除</el-button>
-            <el-button type="text">借阅信息</el-button>
+            <el-button type="text" @click="borroweMessage(scope.row)">借阅信息</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -94,7 +94,6 @@ export default {
 
   watch: {
     dialog_visible(status) {
-      console.log(status, '22')
       if (!status) {
         this.getData()
       }
@@ -137,12 +136,8 @@ export default {
       this.$store.dispatch('dialog_visible')
     },
 
-    time(t) {
-      return formatDate(t)
-    },
-
-    age(t) {
-      return formatDate(new Date()).substr(0, 4) - formatDate(t).substr(0, 4)
+    borroweMessage(scope) {
+      this.$router.push({name: 'admin-message', query: {id: scope._id}})
     },
 
     createUser() {
@@ -161,7 +156,9 @@ export default {
     handleSizeChange(perPage) {
       this.perPage = perPage
       this.getData()
-    }
+    },
+    time(t) { return formatDate(t) },
+    age(t) { return formatDate(new Date()).substr(0, 4) - formatDate(t).substr(0, 4) }
   },
 
   created() {

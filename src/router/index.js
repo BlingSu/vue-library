@@ -14,7 +14,8 @@ const router = new Router({
     { name: 'user-center', path: '/user-center', component: () => import('components/User/UserCenter.vue'), meta: { requireAuth: true} },
     { name: 'admin-login', path: '/admin/login', component: () => import('components/Admin/Login.vue') },
     { name: 'admin-books', path: '/admin/list/books', component: () => import('components/Admin/List/Books.vue') },
-    { name: 'admin-operate', path: '/admin/list/operate', component: () => import('components/Admin/List/Operate.vue') }
+    { name: 'admin-operate', path: '/admin/list/operate', component: () => import('components/Admin/List/Operate.vue') },
+    { name: 'admin-message', path: '/admin/list/message', component: () => import('components/Admin/List/Message.vue') }
   ]
 })
 
