@@ -23,7 +23,7 @@ npm install
 sudo mongod
 
 # dev运行
-npm run start
+npm run dev
 
 # 打包运行
 npm run build
