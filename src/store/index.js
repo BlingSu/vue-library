@@ -10,7 +10,8 @@ const state = {
   logout_status: false,
   user_name: '',
   admin_login: false,
-  user_data: {}
+  user_data: {},
+  dialog_visible: false
 }
 
 export default new Vuex.Store({

@@ -40,12 +40,14 @@
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="editUserData(scope.row)">修改</el-button>
-            <el-button type="text">删除</el-button>
+            <el-button type="text" @click="deleteUserData(scope.row)">删除</el-button>
             <el-button type="text">借阅信息</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
+
+    <delete-dialog :getDeleteId="deleteId"></delete-dialog>
 
     <div class="book-pagination">
       <el-pagination
@@ -64,8 +66,14 @@
 <script>
 import storage from 'common/js/store'
 import formatDate from 'common/js/date'
+import DeleteDialog from './DeleteDialog.vue'
+import {mapState} from 'vuex'
 
 export default {
+  components: {
+    DeleteDialog
+  },
+
   data() {
     return {
       nowTime: null,
@@ -76,7 +84,20 @@ export default {
       tableData: [],
       page: 1,
       perPage: 10,
-      total: null
+      total: null,
+      deleteId: ''
+    }
+  },
+  computed: {
+    ...mapState(['dialog_visible'])
+  },
+
+  watch: {
+    dialog_visible(status) {
+      console.log(status, '22')
+      if (!status) {
+        this.getData()
+      }
     }
   },
 
@@ -109,6 +130,11 @@ export default {
         this.per_page = +resp.data.per_page
         this.page = resp.data.current_page
       })
+    },
+
+    deleteUserData(scope) {
+      this.deleteId = scope._id
+      this.$store.dispatch('dialog_visible')
     },
 
     time(t) {

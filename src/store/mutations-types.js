@@ -11,3 +11,5 @@ export const USER_NAME = 'USER_NAME'
 export const ADMIN_LOGIN = 'ADMIN_LOGIN'
 
 export const USER_DATA = 'USER_DATA'
+
+export const DIALOG_VISIBLE = 'DIALOG_VISIBLE'

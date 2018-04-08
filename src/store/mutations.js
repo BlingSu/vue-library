@@ -15,5 +15,8 @@ export default {
   },
   [types.USER_DATA] (state, scope) {
     state.user_data = Object.assign({}, scope)
+  },
+  [types.DIALOG_VISIBLE] (state) {
+    state.dialog_visible =!state.dialog_visible
   }
 }

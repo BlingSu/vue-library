@@ -15,5 +15,8 @@ export default {
   },
   user_data ({commit}, obj) {
     commit(types.USER_DATA, obj)
+  },
+  dialog_visible({commit}) {
+    commit(types.DIALOG_VISIBLE)
   }
 }
