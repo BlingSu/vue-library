@@ -2,8 +2,8 @@
   <div class="operate">
     <h3>{{ title }}</h3>
     <el-form :model="form" :rules="rules" ref="form" label-width="120px">
-      <el-form-item prop="user_name" label="姓名">
-        <el-input class="operate-input" placeholder="请输入你的用户名" v-model="form.user_name"></el-input>
+      <el-form-item prop="name" label="姓名">
+        <el-input class="operate-input" placeholder="请输入你的用户名" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item prop="gender" label="性别">
         <el-radio-group v-model="form.gender">
@@ -52,10 +52,24 @@ export default {
     ...mapState(['is_status', 'user_data'])
   },
 
+  methods: {
+    createAndEditUser() {
+      this.$http.post('admin/add', this.form)
+      .then(resp => {
+        this.$message({ type: 'success', message: resp.data.message })
+        this.$router.push({path: '/admin/list/books'})
+      })
+    },
+    submitForm(form) {
+      this.createAndEditUser()
+    }
+  },
+
   created() {
     if (this.user_data._id) {
       this.title = '用户信息编辑'
       this.button = '保存'
+      this.form = Object.assign({}, this.user_data)
     } else {
       this.title = '用户信息新增'
       this.button = '新增'
