@@ -4,7 +4,7 @@
 
 > [api地址](https://github.com/angelasubi/node-book-api)
 
-> [爬虫地址]()
+> [爬虫地址](https://github.com/angelasubi/node-book-api/blob/master/spaider.js)
 
 > [SSR版本](https://github.com/angelasubi/library-borrow)
 
